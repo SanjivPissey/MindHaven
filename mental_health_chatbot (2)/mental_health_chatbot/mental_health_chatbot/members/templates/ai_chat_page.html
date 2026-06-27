@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ section_data.title }}</title>
+    <style>
+        /* Base styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .tips {
+            margin: 20px 0;
+        }
+
+        .tip {
+            background-color: #e2e2e2;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .button-box {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .nav-btn {
+            display: inline-block;
+            padding: 12px 20px;
+            font-size: 18px;
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>{{ section_data.title }}</h1>
+
+        <div class="tips">
+            {% for tip in section_data.tips %}
+                <div class="tip">
+                    <p>{{ tip }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="button-box">
+            <a href="{% url 'exercises_and_yoga' %}" class="nav-btn">Go to Exercises & Yoga</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

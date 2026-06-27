@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Reports | MindEase</title>
+
+  <link href="/media/assets/img/favicon.png" rel="icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Raleway&display=swap" rel="stylesheet">
+  
+  <!-- Inline CSS -->
+  <style>
+    /* General Body Styles */
+    body {
+      font-family: 'Roboto', 'Poppins', 'Raleway', sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Favicon */
+    link[rel="icon"] {
+      width: 32px;
+      height: 32px;
+    }
+
+    /* Container for reports */
+    .reports-container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    h2.section-title {
+      font-size: 28px;
+      color: #1d3557;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .filter-section {
+      margin-bottom: 30px;
+    }
+
+    .filter-section .row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .filter-section .form-control,
+    .filter-section .form-select {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    /* Report Card Styles */
+    .report-card {
+      background-color: #fff;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .report-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .report-header {
+      font-size: 24px;
+      color: #f09a24;
+      margin-bottom: 15px;
+    }
+
+    .report-meta {
+      margin-bottom: 15px;
+      color: #555;
+    }
+
+    .report-meta .badge {
+      font-size: 14px;
+      background-color: #5a89cf;
+      color: white;
+    }
+
+    .report-content {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .action-buttons .btn {
+      background-color: #1d3557;
+      color: #fff;
+      border-radius: 5px;
+      padding: 8px 15px;
+      text-transform: uppercase;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .action-buttons .btn:hover {
+      background-color: #457b9d;
+    }
+
+    /* No reports message */
+    .text-center.text-muted {
+      font-size: 18px;
+      color: #999;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 767px) {
+      .filter-section .row {
+        flex-direction: column;
+      }
+      
+      .report-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reports-container">
+    <h2 class="section-title"><i class="fas fa-file-medical"></i> Reports</h2>
+
+    <div class="filter-section">
+      <div class="row">
+        <div class="col-md-6">
+          <input type="text" id="searchInput" class="form-control" placeholder="🔍 Search by patient name...">
+        </div>
+        <div class="col-md-6">
+          <select id="filterSelect" class="form-select">
+            <option value="">🔍 All Reports</option>
+            {% for user in assigned_users %}
+              <option value="{{ user.fullname }}">{{ user.fullname }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    {% if reports %}
+      <div class="report-grid">
+        {% for report in reports %}
+          <div class="report-card">
+            <div class="report-meta">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="me-3">Patient: {{ report.user.fullname }}</span>
+                <span class="badge bg-primary">Created: {{ report.created_at|date:"d M Y, h:i A" }}</span>
+              </div>
+            </div>
+            <div class="report-content">
+              {{ report.summary|linebreaks }}
+              {{ report.recommendations|linebreaks }}
+            </div>
+            <div class="action-buttons">
+              <a href="{% url 'view_report' report.id %}" class="btn btn-primary">View Full Report</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-center text-muted">No reports available.</p>
+    {% endif %}
+  </div>
+
+  <script>
+    document.getElementById('searchInput').addEventListener('keyup', filterReports);
+    document.getElementById('filterSelect').addEventListener('change', filterReports);
+    
+    function filterReports() {
+      const searchInput = document.getElementById('searchInput');
+      const filterSelect = document.getElementById('filterSelect');
+      const reports = document.getElementsByClassName('report-card');
+      
+      const searchTerm = searchInput.value.toLowerCase();
+      const selectedPatient = filterSelect.value;
+      
+      if (!searchTerm && !selectedPatient) {
+        Array.from(reports).forEach(report => {
+          report.style.display = '';
+        });
+        return;
+      }
+      
+      for (let i = 0; i < reports.length; i++) {
+        const report = reports[i];
+        const patientName = report.querySelector('.report-meta span:first-child').textContent.toLowerCase();
+        
+        const matchesSearch = patientName.includes(searchTerm);
+        const matchesFilter = selectedPatient === "" || patientName.includes(selectedPatient.toLowerCase());
+        
+        report.style.display = matchesSearch && matchesFilter ? "" : "none";
+      }
+    }
+
+    filterReports();
+  </script>
+</body>
+</html>

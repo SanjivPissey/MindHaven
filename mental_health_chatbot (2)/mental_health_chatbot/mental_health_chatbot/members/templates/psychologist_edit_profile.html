@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edit Profile | MindEase</title>
+
+  <!-- Favicons & Fonts -->
+  <link href="/media/assets/img/favicon.png" rel="icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- CSS Libraries -->
+  <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/media/assets/css/main.css" rel="stylesheet">
+
+  <style>
+    .edit-form-container {
+      max-width: 600px;
+      margin: 80px auto;
+      background: var(--surface-color);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .edit-form-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-family: var(--heading-font);
+      color: var(--heading-color);
+    }
+    .form-control {
+      border-radius: 8px;
+    }
+    .btn-primary {
+      width: 100%;
+      padding: 10px;
+      font-weight: bold;
+      font-family: var(--nav-font);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="edit-form-container">
+    <h2>Edit Profile</h2>
+
+    <form method="POST" action="{% url 'psychologist_edit_profile' %}">
+      {% csrf_token %}
+      
+      <div class="mb-3">
+        <label for="full_name" class="form-label">Full Name</label>
+        <input type="text" id="full_name" name="full_name" class="form-control" value="{{ user_profile.full_name }}" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" id="email" name="email" class="form-control" value="{{ user_profile.email }}" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="phone_number" class="form-label">Phone Number</label>
+        <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ user_profile.phone_number }}" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+
+    <div class="text-center mt-3">
+      <a href="/psychologist_profile" class="btn btn-link">Cancel</a>
+    </div>
+  </div>
+
+</body>
+</html>

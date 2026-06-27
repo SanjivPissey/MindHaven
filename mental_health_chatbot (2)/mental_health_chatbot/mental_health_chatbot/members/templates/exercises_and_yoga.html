@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercises and Yoga Tips 🧘‍♀️</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            text-align: center;
+            padding: 40px;
+        }
+        .container {
+            display: inline-block;
+            text-align: left;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            width: 50%;
+        }
+        .tip {
+            margin-bottom: 18px;
+            font-size: 18px;
+            padding: 10px;
+            border-left: 5px solid #ffffff;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .nav-btn {
+            display: inline-block;
+            margin: 20px 10px 0 10px;
+            padding: 12px 18px;
+            background: #007BFF; /* Blue */
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-btn:hover {
+            background: #0056b3; /* Darker Blue on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🌿 Exercises and Yoga Tips for a Healthy Mind 🤖</h1>
+
+    <div class="container">
+        <div class="tip">✨ Do regular stretches for flexibility. Try the <strong>Butterfly Pose</strong> 🦋.</div>
+        <div class="tip">🧘‍♀️ Practice yoga to improve strength and balance. Try <strong>Tree Pose</strong> 🌳 for focus.</div>
+        <div class="tip">🌬️ Take time for deep breathing exercises. Try <strong>Pranayama</strong> 🫁 for relaxation.</div>
+        <div class="tip">💪 Incorporate strength training for muscle tone. Squats & Planks work wonders! 🏋️‍♂️</div>
+        <div class="tip">🧘‍♂️ Practice mindfulness with yoga for mental clarity. Try <strong>Shavasana</strong> (Corpse Pose) 💤.</div>
+    </div>
+
+    <br>
+    <a href="{% url 'ai_chat_page' section=1 %}" class="nav-btn">⬅ Previous</a>
+    <a href="{% url 'music_therapy' %}" class="nav-btn">Music Therapy ➡</a>
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat History - MindEase</title>
+
+  <!-- Fonts and Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Raleway&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Bootstrap -->
+  <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="/media/assets/css/main.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --default-font: "Roboto", sans-serif;
+      --heading-font: "Poppins", sans-serif;
+      --nav-font: "Raleway", sans-serif;
+      --background-color: #f7f9fc;
+      --surface-color: #ffffff;
+      --accent-color: #1977cc;
+      --heading-color: #2c4964;
+      --text-color: #555;
+      --user-message-bg: #e3f2fd;
+      --bot-message-bg: #f5f5f5;
+      --contrast-color: #ffffff;
+    }
+
+    body {
+      font-family: var(--default-font);
+      background-color: var(--background-color);
+      margin: 0;
+      padding: 0;
+      color: var(--text-color);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--heading-font);
+      color: var(--heading-color);
+    }
+
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: var(--accent-color);
+      padding-top: 20px;
+      color: var(--contrast-color);
+      z-index: 1000;
+    }
+
+    .sidebar .logo h1 {
+      color: white;
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+      font-family: var(--heading-font);
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-family: var(--nav-font);
+      display: flex;
+      align-items: center;
+    }
+
+    .sidebar ul li a i {
+      margin-right: 10px;
+    }
+
+    .sidebar ul li:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 40px 20px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+    }
+
+    .card {
+      background-color: var(--surface-color);
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+    }
+
+    .btn-primary {
+      background-color: var(--accent-color);
+      border: none;
+    }
+
+    .chat-messages {
+      max-height: 500px;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .user-message {
+      background-color: var(--user-message-bg);
+      border-radius: 10px;
+      margin-bottom: 15px;
+      padding: 15px;
+    }
+
+    .bot-message {
+      background-color: var(--bot-message-bg);
+      border-radius: 10px;
+      margin-bottom: 15px;
+      padding: 15px;
+    }
+
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+
+    .message-sender {
+      font-weight: bold;
+      color: var(--heading-color);
+    }
+
+    .message-time {
+      font-size: 0.8em;
+      color: #6c757d;
+    }
+
+    .message-content {
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="logo">
+    <h1>MindEase</h1>
+  </div>
+  <ul>
+    <li><a href="/psychologist_dashboard"><i class="fas fa-home"></i>Dashboard</a></li>
+    <li><a href="/psychologist_profile"><i class="fas fa-user"></i>My Profile</a></li>
+    <li><a href="/assigned_users"><i class="fas fa-users"></i>Assigned Users</a></li>
+      <li><a href="/psychologist_appointments/"><i class="fas fa-calendar-alt"></i>Appointments</a></li>
+
+    <li><a href="/view_survey_list"><i class="fas fa-clipboard-list"></i>Survey Forms</a></li>
+    <li><a href="/chat_history"><i class="fas fa-comments"></i>Chat Histories</a></li>
+    <li><a href="/mood_insights"><i class="fas fa-chart-line"></i>Mood Insights</a></li>
+    <li><a href="/reports"><i class="fas fa-file-medical"></i>Reports</a></li>
+    <li><a href="/user_logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+  </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="container-fluid">
+    <h2 class="mb-4">Chat History</h2>
+
+    <!-- User Selection -->
+    <div class="row mb-4">
+      {% for user in assigned_users %}
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ user.fullname }}</h5>
+              <p class="card-text">{{ user.email }}</p>
+              <a href="{% url 'chat_history_user' user.id %}" class="btn btn-primary">View Chat</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Chat Messages -->
+    {% if selected_user %}
+      <div class="chat-container mt-5">
+        <h3>{{ selected_user.fullname }}'s Chat History</h3>
+        <div class="chat-messages">
+          {% for message in chat_messages %}
+            <div class="message {% if message.sender == 'User' %}user-message{% else %}bot-message{% endif %}">
+              <div class="message-content">
+                <div class="message-header">
+                  <span class="message-sender">{{ message.sender }}</span>
+                  <span class="message-time">{{ message.timestamp }}</span>
+                </div>
+                <div class="message-text">{{ message.content }}</div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <!-- Current Mood -->
+        {% if current_mood %}
+          <div class="current-mood mt-4">
+            <h4>Current Mood</h4>
+            <div class="mood-display">
+              <span class="mood-label">{{ current_mood.mood }}</span>
+              <span class="confidence">{{ current_mood.confidence_score|floatformat:2 }}% confidence</span>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+{% block content %}
+<style>
+    /* General Styles */
+    .report-section {
+        background: #ffffff;
+        padding: 40px 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        margin-top: 40px;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: 'Poppins', sans-serif;
+        color: #444;
+        animation: fadeIn 0.8s ease-in-out;
+    }
+
+    /* Title & Icon */
+    .report-section h3 {
+        color: #333;
+        font-weight: 600;
+        font-size: 26px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+    }
+
+    .report-section h3 i {
+        margin-right: 12px;
+        color: #007bff;
+        font-size: 1.5rem;
+    }
+
+    /* Date and Summary */
+    .report-section p {
+        font-size: 16px;
+        color: #555;
+        line-height: 1.8;
+    }
+
+    .report-section p strong {
+        font-weight: 600;
+        color: #333;
+    }
+
+    /* Styled Summary and Recommendations Section */
+    .report-section p.summary,
+    .report-section p.recommendations {
+        margin-top: 25px;
+        background-color: #f5f8fa;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        font-style: italic;
+        color: #444;
+        border-left: 5px solid #007bff;
+    }
+
+    .report-section hr {
+        border-top: 1px solid #f0f0f0;
+        margin: 20px 0;
+    }
+
+    /* No Report Section */
+    .no-report {
+        text-align: center;
+        padding: 40px;
+        color: #888;
+    }
+
+    .no-report h5 {
+        font-size: 22px;
+        color: #555;
+        font-weight: 600;
+    }
+
+    .no-report p {
+        font-size: 15px;
+        color: #777;
+    }
+
+    .no-report i {
+        color: #007bff;
+        margin-bottom: 15px;
+    }
+
+    /* Animation for Fade-In */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .report-section {
+            padding: 30px 20px;
+        }
+
+        .report-section h3 {
+            font-size: 24px;
+        }
+    }
+
+    /* Hover Effect on Report Section */
+    .report-section:hover {
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        transform: translateY(-5px);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+</style>
+
+<div class="report-section">
+    <h3><i class="fas fa-file-alt me-2"></i>Your Latest Report</h3>
+
+    {% if report %}
+        <p><strong>Generated On:</strong> {{ report.created_at|date:"d M Y" }}</p>
+        <hr>
+        
+        <!-- Styled Summary Section -->
+        <p class="summary"><strong>Summary:</strong></p>
+        <p>{{ report.summary|linebreaks }}</p>
+
+        <!-- Styled Recommendations Section -->
+        <p class="recommendations"><strong>Recommendations:</strong></p>
+        <p>{{ report.recommendations|linebreaks }}</p>
+    {% else %}
+        <div class="no-report">
+            <p><i class="fas fa-info-circle fa-3x mb-3"></i></p>
+            <h5>No report available yet.</h5>
+            <p>Please check back after your psychologist submits a report.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

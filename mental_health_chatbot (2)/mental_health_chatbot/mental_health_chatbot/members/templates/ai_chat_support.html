@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>24/7 pport</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding: 50px 15px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #007BFF;
+    }
+
+    .message {
+      font-size: 18px;
+      margin: 20px 0;
+      color: #444;
+    }
+
+    .start-chat-btn {
+      display: inline-block;
+      padding: 10px 22px;
+      background-color: #007BFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 18px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .start-chat-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .chatbot-box {
+      background-color: #f8f8f8;
+      margin-top: 40px;
+      padding: 25px;
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    .chat-log {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 10px;
+      min-height: 250px;
+      max-height: 400px;
+      overflow-y: auto;
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .chat-message {
+      margin-bottom: 12px;
+      padding: 10px;
+      border-radius: 10px;
+      line-height: 1.5;
+    }
+
+    .user {
+      background-color: #e0f0ff;
+      align-self: flex-end;
+    }
+
+    .bot {
+      background-color: #e8f5e9;
+      align-self: flex-start;
+    }
+
+    .chat-form {
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-form input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .chat-form button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .chat-form button:hover {
+      background-color: #0056b3;
+    }
+
+    .sample-questions {
+      margin-top: 15px;
+    }
+
+    .sample-questions button {
+      margin: 5px 5px 0 0;
+      background: #e0e0e0;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .sample-questions button:hover {
+      background-color: #d0d0d0;
+    }
+
+    /* Voice Control Styles */
+    .chat-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .voice-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .mic-btn {
+      background: none;
+      border: none;
+      color: #6c757d;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 50%;
+      transition: all 0.3s;
+    }
+
+    .mic-btn:hover {
+      background-color: #e9ecef;
+      color: #007BFF;
+    }
+
+    .mic-btn.listening {
+      color: #dc3545;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+      }
+    }
+
+    /* Switch Toggle Style */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: #007BFF;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(26px);
+    }
+    /* Language Toggle */
+    .lang-toggle {
+      display: inline-flex;
+      border-radius: 30px;
+      overflow: hidden;
+      border: 2px solid #007BFF;
+      background: #f0f4ff;
+    }
+
+    .lang-toggle button {
+      padding: 6px 18px;
+      border: none;
+      background: transparent;
+      color: #007BFF;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s;
+      border-radius: 0;
+    }
+
+    .lang-toggle button.active {
+      background: #007BFF;
+      color: #fff;
+    }
+
+    .lang-toggle button:first-child {
+      border-right: 1px solid #007BFF;
+    }
+  </style>
+  <!-- Load FontAwesome for icons if not already loaded -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <h2>Welcome to 24/7 chat bot 💬</h2>
+
+    <div class="chat-controls">
+      <a href="{% url 'ai_chat_support' %}" class="start-chat-btn" style="font-size: 14px; padding: 8px 16px;">New
+        Chat</a>
+
+      <!-- Language Toggle -->
+      <div class="lang-toggle" id="lang-toggle" title="Choose response language">
+        <button id="btn-en" class="active" onclick="setLanguage('en')">🇬🇧 English</button>
+        <button id="btn-hi" onclick="setLanguage('hi')">🇮🇳 हिंदी</button>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <label class="voice-toggle">
+          <span>Auto-Speak Responses</span>
+          <div class="switch">
+            <input type="checkbox" id="voice-toggle-checkbox">
+            <span class="slider"></span>
+          </div>
+        </label>
+        <button id="stop-audio-btn" style="display: none; padding: 5px 10px; font-size: 13px; border-radius: 20px; border: 1px solid #dc3545; background: #fff; color: #dc3545; cursor: pointer;" onclick="stopSpeaking()">
+          <i class="fas fa-stop-circle"></i> Stop Audio
+        </button>
+      </div>
+    </div>
+
+    <div class="chatbot-box">
+      <h3 style="color:#007BFF;">Chat with our AI Chatbot 🤖</h3>
+
+      <div class="chat-log" id="chat-log">
+        <div class="chat-message bot" id="greeting-msg">
+          <strong>Bot:</strong> Hello! I'm here to provide 24/7 mental health support. Feel free to share what's on your
+          mind, and I'll do my best to help. How are you feeling today?
+        </div>
+      </div>
+
+      <form id="chat-form" class="chat-form">
+        {% csrf_token %}
+        <button type="button" id="mic-btn" class="mic-btn" title="Speak message">
+          <i class="fas fa-microphone"></i>
+        </button>
+        <input type="text" name="user_message" placeholder="Type or speak your message..." required id="question-input">
+        <button type="submit">Send</button>
+      </form>
+
+      <div class="sample-questions" id="sample-questions">
+        <strong>Try asking:</strong><br>
+        <button type="button" onclick="fillQuestion('What services do you offer?')" id="sq-1">What services do you offer?</button>
+        <button type="button" onclick="fillQuestion('How can I get help?')" id="sq-2">How can I get help?</button>
+        <button type="button" onclick="fillQuestion('Tell me about AI support')" id="sq-3">Tell me about AI support</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Language Selection ---
+    let selectedLanguage = 'en'; // default
+
+    const GREETINGS = {
+      en: "Hello! I'm here to provide 24/7 mental health support. Feel free to share what's on your mind, and I'll do my best to help. How are you feeling today?",
+      hi: "नमस्ते! मैं आपकी मानसिक स्वास्थ्य सहायता के लिए यहाँ हूँ। आप जो भी महसूस कर रहे हैं, मुझसे बेझिझक बताएं। आज आप कैसा महसूस कर रहे हैं?"
+    };
+
+    const SAMPLE_QUESTIONS = {
+      en: [
+        { id: 'sq-1', text: 'What services do you offer?' },
+        { id: 'sq-2', text: 'How can I get help?' },
+        { id: 'sq-3', text: 'Tell me about AI support' },
+      ],
+      hi: [
+        { id: 'sq-1', text: 'आप क्या सेवाएं प्रदान करते हैं?' },
+        { id: 'sq-2', text: 'मुझे मदद कैसे मिल सकती है?' },
+        { id: 'sq-3', text: 'मैं बहुत उदास हूँ, क्या करूँ?' },
+      ]
+    };
+
+    function setLanguage(lang) {
+      selectedLanguage = lang;
+
+      // Toggle button styles
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-hi').classList.toggle('active', lang === 'hi');
+
+      // Update greeting
+      const greetEl = document.getElementById('greeting-msg');
+      if (greetEl) greetEl.innerHTML = `<strong>Bot:</strong> ${GREETINGS[lang]}`;
+
+      // Update sample questions
+      const samples = SAMPLE_QUESTIONS[lang];
+      samples.forEach(q => {
+        const btn = document.getElementById(q.id);
+        if (btn) {
+          btn.textContent = q.text;
+          btn.onclick = () => fillQuestion(q.text);
+        }
+      });
+
+      // Update placeholder
+      const inputField = document.getElementById('question-input');
+      inputField.placeholder = lang === 'hi' ? 'अपना संदेश लिखें या बोलें...' : 'Type or speak your message...';
+
+      // Update speech recognition language
+      if (recognition) {
+        recognition.lang = lang === 'hi' ? 'hi-IN' : 'en-US';
+      }
+
+      // Store preference
+      localStorage.setItem('chatLanguage', lang);
+    }
+
+    // Restore preference on load
+    window.addEventListener('load', () => {
+      const saved = localStorage.getItem('chatLanguage');
+      if (saved) setLanguage(saved);
+    });
+
+    function fillQuestion(text) {
+      document.getElementById('question-input').value = text;
+    }
+
+    // --- Voice Interaction Setup ---
+    const voiceToggle = document.getElementById('voice-toggle-checkbox');
+    const micBtn = document.getElementById('mic-btn');
+    const questionInput = document.getElementById('question-input');
+    let recognition;
+    let synthesis = window.speechSynthesis;
+
+    // Initialize Speech Recognition
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US'; // updated dynamically by setLanguage()
+
+      recognition.onstart = function () {
+        micBtn.classList.add('listening');
+        questionInput.placeholder = "Listening...";
+      };
+
+      recognition.onend = function () {
+        micBtn.classList.remove('listening');
+        questionInput.placeholder = "Type or speak your message...";
+      };
+
+      recognition.onresult = function (event) {
+        const transcript = event.results[0][0].transcript;
+        questionInput.value = transcript;
+        // Optional: Auto-submit after voice input
+        // document.getElementById('chat-form').dispatchEvent(new Event('submit')); 
+      };
+
+      recognition.onerror = function (event) {
+        console.error('Speech recognition error', event.error);
+        micBtn.classList.remove('listening');
+        questionInput.placeholder = "Error hearing capabilities. Try typing.";
+      };
+
+      micBtn.addEventListener('click', function () {
+        if (micBtn.classList.contains('listening')) {
+          recognition.stop();
+        } else {
+          recognition.start();
+        }
+      });
+    } else {
+      micBtn.style.display = 'none'; // Hide mic if not supported
+      console.log('Web Speech API not supported in this browser.');
+    }
+
+    // Text-to-Speech Function
+    function speakText(text) {
+      if (!voiceToggle.checked) return;
+
+      // Cancel any current speaking
+      synthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = selectedLanguage === 'hi' ? 'hi-IN' : 'en-US';
+      utterance.rate = 1.0;
+      utterance.pitch = 1.0;
+
+      // Select an appropriate voice based on language
+      const voices = synthesis.getVoices();
+      let preferredVoice;
+      if (selectedLanguage === 'hi') {
+        preferredVoice = voices.find(voice => voice.lang.includes('hi') || voice.name.includes('Hindi') || voice.name.includes('India'));
+      } else {
+        preferredVoice = voices.find(voice => voice.name.includes('Google US English') || voice.name.includes('Samantha') || voice.name.includes('Female') || voice.lang.includes('en-US'));
+      }
+      
+      if (preferredVoice) {
+        utterance.voice = preferredVoice;
+      }
+
+      utterance.onstart = function() {
+        document.getElementById('stop-audio-btn').style.display = 'inline-block';
+      };
+
+      utterance.onend = function() {
+        document.getElementById('stop-audio-btn').style.display = 'none';
+      };
+      
+      utterance.onerror = function() {
+        document.getElementById('stop-audio-btn').style.display = 'none';
+      };
+
+      synthesis.speak(utterance);
+    }
+
+    function stopSpeaking() {
+      if (synthesis) {
+        synthesis.cancel();
+      }
+      document.getElementById('stop-audio-btn').style.display = 'none';
+    }
+
+    // Ensure voices are loaded (needed for some browsers)
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+      speechSynthesis.onvoiceschanged = function () { console.log("Voices loaded") };
+    }
+
+
+    // --- Chat Logic ---
+    document.getElementById('chat-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const inputField = document.getElementById('question-input');
+      const submitButton = document.querySelector('#chat-form button[type="submit"]');
+      const userMessage = inputField.value.trim();
+      const chatLog = document.getElementById('chat-log');
+
+      if (!userMessage) return;
+
+      // Show user message
+      chatLog.innerHTML += `<div class="chat-message user"><strong>You:</strong> ${userMessage}</div>`;
+      chatLog.scrollTop = chatLog.scrollHeight;
+
+      // Show loading indicator
+      const loadingId = 'loading-' + Date.now();
+      chatLog.innerHTML += `<div id="${loadingId}" class="chat-message bot"><strong>Bot:</strong> <em>Thinking...</em></div>`;
+      chatLog.scrollTop = chatLog.scrollHeight;
+
+      // Disable input and button
+      inputField.disabled = true;
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+      inputField.value = '';
+
+      // Get CSRF token from the form
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+      fetch("{% url 'ai_chat_support' %}", {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          "X-CSRFToken": csrftoken,
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({ user_message: userMessage, language: selectedLanguage })
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(data => {
+          // Remove loading indicator
+          const loadingEl = document.getElementById(loadingId);
+          if (loadingEl) loadingEl.remove();
+
+          let botText = "";
+          if (data.ai_reply) {
+            botText = data.ai_reply;
+            chatLog.innerHTML += `<div class="chat-message bot"><strong>Bot:</strong> ${data.ai_reply}</div>`;
+          } else if (data.error) {
+            botText = "I encountered an error.";
+            chatLog.innerHTML += `<div class="chat-message bot" style="color: red;"><strong>Error:</strong> ${data.error}</div>`;
+          } else {
+            botText = "I'm here to support you. How can I help you today?";
+            chatLog.innerHTML += `<div class="chat-message bot"><strong>Bot:</strong> ${botText}</div>`;
+          }
+
+          chatLog.scrollTop = chatLog.scrollHeight;
+
+          // Speak the response if toggle is on
+          speakText(botText);
+        })
+        .catch(err => {
+          // Remove loading indicator
+          const loadingEl = document.getElementById(loadingId);
+          if (loadingEl) loadingEl.remove();
+
+          console.error('Chat error:', err);
+          chatLog.innerHTML += `<div class="chat-message bot" style="color: red;"><strong>Error:</strong> Unable to connect to the chat service. Please try again.</div>`;
+          chatLog.scrollTop = chatLog.scrollHeight;
+        })
+        .finally(() => {
+          // Re-enable input and button
+          inputField.disabled = false;
+          submitButton.disabled = false;
+          submitButton.textContent = 'Send';
+          inputField.focus();
+        });
+    });
+  </script>
+
+</body>
+
+</html>

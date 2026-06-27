@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Book Appointment | MindEase</title>
+    <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/media/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/media/assets/css/main.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .appointment-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .btn-primary {
+            background-color: #1977cc;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 5px;
+        }
+
+        .upcoming-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Simplified Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand text-primary fw-bold" href="{% url 'userdashboard' %}">MindEase</a>
+            <a href="{% url 'userdashboard' %}" class="btn btn-outline-primary btn-sm">Back to Dashboard</a>
+        </div>
+    </nav>
+
+    <div class="container pb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="appointment-card">
+                    <h2 class="text-center mb-4 text-primary"><i class="bi bi-calendar-plus"></i> Book an Appointment
+                    </h2>
+                    <p class="text-center text-muted mb-4">You are booking a session with your assigned psychologist:
+                        <strong>{{ psychologist.fullname }}</strong>
+                    </p>
+
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <form method="POST" action="{% url 'book_appointment' %}">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="date" class="form-label fw-bold">Select Date</label>
+                                <input type="date" class="form-control" id="date" name="date" required
+                                    min="{{ current_date }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="time" class="form-label fw-bold">Select Time</label>
+                                <input type="time" class="form-control" id="time" name="time" required>
+                            </div>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Schedule Session</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upcoming Appointments Section -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8">
+                <h3 class="mb-4"><i class="bi bi-camera-video text-primary"></i> Your Upcoming Sessions</h3>
+
+                {% if upcoming_appointments %}
+                {% for appt in upcoming_appointments %}
+                <div class="upcoming-card d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-1 text-primary">Session with {{ appt.psychologist.fullname }}</h5>
+                        <p class="mb-0 text-muted"><i class="bi bi-calendar"></i> {{ appt.date }} &nbsp; | &nbsp; <i
+                                class="bi bi-clock"></i> {{ appt.time }}</p>
+                    </div>
+                    <div>
+                        <a href="{% url 'video_call' appt.id %}" class="btn btn-success"><i class="bi bi-telephone"></i>
+                            Join Call</a>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="alert alert-light border text-center text-muted">
+                    You have no upcoming appointments.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="/media/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

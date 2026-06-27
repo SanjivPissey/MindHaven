@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Psychologist Profile | MindEase</title>
+
+  <!-- Favicons & Fonts -->
+  <link href="/media/assets/img/favicon.png" rel="icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- CSS Libraries -->
+  <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/media/assets/css/main.css" rel="stylesheet">
+
+  <style>
+    /* Same variables as before */
+    :root {
+      --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      --heading-font: "Poppins", sans-serif;
+      --nav-font: "Raleway", sans-serif;
+      --background-color: #ffffff;
+      --default-color: #444444;
+      --heading-color: #2c4964;
+      --accent-color: #1977cc;
+      --surface-color: #ffffff;
+      --contrast-color: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--default-font);
+      background-color: var(--background-color);
+      color: var(--default-color);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--heading-font);
+      color: var(--heading-color);
+    }
+
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: var(--accent-color);
+      color: var(--contrast-color);
+      padding-top: 20px;
+      z-index: 999;
+    }
+
+    .sidebar .logo {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .sidebar .logo h1 {
+      font-family: var(--heading-font);
+      font-size: 24px;
+      color: var(--contrast-color);
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar ul li a {
+      color: var(--contrast-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      font-family: var(--nav-font);
+    }
+
+    .sidebar ul li a i {
+      margin-right: 10px;
+    }
+
+    .sidebar ul li:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 40px 20px;
+    }
+
+    .profile-card {
+      background: var(--surface-color);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .profile-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+
+    .profile-info {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .profile-info h5 {
+      color: var(--heading-color);
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .profile-info p {
+      margin-bottom: 15px;
+    }
+
+    .edit-btn {
+      margin-top: 20px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+      .main-content {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sidebar">
+    <div class="logo">
+      <h1>MindEase</h1>
+    </div>
+    <ul>
+      <li><a href="/psychologist_dashboard"><i class="fas fa-home"></i>Dashboard</a></li>
+      <li><a href="/psychologist_profile"><i class="fas fa-user"></i>My Profile</a></li>
+      <li><a href="/assigned_users"><i class="fas fa-users"></i>Assigned Users</a></li>
+      <li><a href="/psychologist_appointments/"><i class="fas fa-calendar-alt"></i>Appointments</a></li>
+
+      <li><a href="/view_survey"><i class="fas fa-clipboard-list"></i>Survey Forms</a></li>
+      <li><a href="/chat_history"><i class="fas fa-comments"></i>Chat Histories</a></li>
+      <li><a href="/mood_insights"><i class="fas fa-chart-line"></i>Mood Insights</a></li>
+      <li><a href="/reports"><i class="fas fa-file-medical"></i>Reports</a></li>
+      <li><a href="/user_logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <h2 class="dashboard-title">My Profile</h2>
+
+    <div class="profile-card">      
+      <h3>{{ user_profile.full_name }}</h3>
+      <p class="text-muted">{{ user_profile.role }}</p>
+
+      <div class="profile-info">
+        <h5>Email</h5>
+        <p>{{ user_profile.email }}</p>
+
+        <h5>Phone Number</h5>
+        <p>{{ user_profile.phone_number }}</p>
+
+        <h5>Role</h5>
+        <p>{{ user_profile.role }}</p>
+      </div>
+
+      <a href="/psychologist_edit_profile" class="btn btn-primary edit-btn"><i class="fas fa-edit"></i> Edit Profile</a>
+    </div>
+  </div>
+
+</body>
+</html>

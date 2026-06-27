@@ -1,0 +1,166 @@
+{% extends 'admindashboard.html' %}
+
+{% block content %}
+<style>
+    .dashboard-section {
+        padding: 30px;
+        background-color: #f7f9fc;
+    }
+
+    .dashboard-section h4 {
+        font-weight: 600;
+        color: #1d3557;
+    }
+
+    .dashboard-section h4 i.fa-file-medical {
+        color: #ff69b4; /* Pink color for brain icon */
+    }
+
+    .search-box {
+        display: flex;
+        gap: 10px;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .search-box input {
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        flex: 1;
+    }
+
+    .search-box button {
+        background-color: #0d6efd;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+
+    .search-box button:hover {
+        background-color: #0b5ed7;
+    }
+
+    .card {
+        border: 1px solid #dee2e6;
+        border-radius: 12px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #343a40;
+    }
+
+    .text-muted span {
+        display: inline-block;
+        margin-bottom: 6px;
+        font-size: 0.95rem;
+    }
+
+    .report-content h6 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #0d6efd; /* Changed from green to blue */
+    }
+
+    .report-content p {
+        font-size: 0.95rem;
+        color: #555;
+    }
+
+    .btn-primary.btn-sm {
+        background-color: #0d6efd;
+        border: none;
+        border-radius: 6px;
+        padding: 6px 12px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .btn-primary.btn-sm:hover {
+        background-color: #0b5ed7;
+    }
+
+    @media (max-width: 768px) {
+        .search-box {
+            flex-direction: column;
+        }
+
+        .search-box button {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="dashboard-section">
+    <h4 class="text-center mb-4"><i class="fas fa-file-medical"></i> Clinical Reports</h4>
+
+    <div class="d-flex justify-content-center align-items-center mb-4">
+        <div class="search-box">
+            <input type="text" class="form-control" placeholder="Search by patient name..." id="report-search">
+            <button class="btn btn-primary" onclick="searchReports()">Search</button>
+        </div>
+    </div>
+
+    <div class="reports-container mt-4">
+        {% if reports %}
+            <div class="row">
+                {% for report in reports %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-2">{{ report.title }}</h5>
+                                <div class="text-muted mb-3">
+                                    <span class="me-3">Patient: {{ report.user.fullname }}</span>
+                                    <span>Psychologist: {{ report.psychologist_name }}</span>
+                                </div>
+                                <div class="report-content mt-3">
+                                    <h6 class="mb-2">Summary:</h6>
+                                    <p class="mb-3">{{ report.summary|truncatewords:20 }}</p>
+                                    
+                                    <h6 class="mb-2">Recommendations:</h6>
+                                    <p class="mb-3">{{ report.recommendations|truncatewords:20 }}</p>
+                                </div>
+                                <div class="report-actions mt-3">
+                                    <a href="{% url 'view_report' report.id %}" class="btn btn-primary btn-sm">View Full Report</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <h5>No reports found!</h5>
+                <p class="text-muted mb-4">No reports have been created yet.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function searchReports() {
+        const searchTerm = document.getElementById('report-search').value.toLowerCase();
+        const reportCards = document.querySelectorAll('.card');
+
+        reportCards.forEach(card => {
+            const patientName = card.querySelector('.text-muted span').textContent.toLowerCase();
+            card.style.display = patientName.includes(searchTerm) ? '' : 'none';
+        });
+    }
+</script>
+{% endblock %}

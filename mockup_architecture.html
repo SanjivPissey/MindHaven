@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Architecture</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background-color: #f8fafc; margin: 0; }
+        .diagram-container { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
+        h2 { text-align: center; color: #334155; margin-bottom: 30px; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="diagram-container">
+        <h2>MindHaven System Architecture</h2>
+        <pre class="mermaid">
+        graph TD
+            subgraph Client Side
+                A[Patient Web App]
+                P[Psychologist Dashboard]
+            end
+            
+            subgraph Server Side (Django)
+                B(Authentication Module)
+                C(Chat Controller)
+                D(Crisis Detection & Mood Engine)
+            end
+            
+            subgraph External Services
+                E[Google Gemini AI API]
+            end
+            
+            subgraph Database
+                F[(Patient & Chat DB)]
+            end
+
+            A -->|Login/Req| B
+            P -->|Login/Req| B
+            
+            A -->|Send Message| C
+            C -->|Pass Context| D
+            D -->|Prompt| E
+            E -->|AI Response + Mood| D
+            D -->|Save Data| F
+            D -->|Return Message| C
+            C -->|Display Reply| A
+            
+            F -->|Fetch Analytics| P
+            
+            style A fill:#bfdbfe,stroke:#3b82f6,stroke-width:2px
+            style P fill:#bbf7d0,stroke:#22c55e,stroke-width:2px
+            style E fill:#fef08a,stroke:#eab308,stroke-width:2px
+            style F fill:#e2e8f0,stroke:#64748b,stroke-width:2px
+        </pre>
+    </div>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>

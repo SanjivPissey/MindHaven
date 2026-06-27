@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therapy Suggestions Chatbot</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #ffffff; /* Completely white background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            color: #4c9bff; /* Light blue color for heading */
+            font-size: 26px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            font-size: 16px;
+            margin-top: 10px;
+            background-color: #f9f9f9;
+            transition: all 0.3s ease;
+        }
+
+        button {
+            background-color: #4c9bff; /* Light blue for the button */
+            color: white;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3386d1; /* Slightly darker blue on hover */
+        }
+
+        .tips-box {
+            margin-top: 30px;
+            text-align: left;
+            background: #ffffff; /* Pure white background */
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e0e0e0; /* Light border around tips box */
+        }
+
+        .tips-box h3 {
+            font-size: 20px;
+            color: #4c9bff; /* Light blue */
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .tips-box ul {
+            padding-left: 20px;
+            text-align: left;
+            list-style-type: none;
+        }
+
+        .tips-box ul li {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: #333; /* Dark text for readability */
+        }
+
+        .done-btn {
+            margin-top: 20px;
+            padding: 6px 16px;
+            border-radius: 12px;
+            background-color: #4c9bff; /* Light blue */
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            transition: background 0.3s ease;
+        }
+
+        .done-btn:hover {
+            background-color: #3386d1;
+        }
+
+        .done-btn:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>💬 Therapy Suggestions Chatbot</h2>
+    <form method="post">
+        {% csrf_token %}
+        <select name="mood" required>
+            <option value="" disabled selected>💭 How are you feeling today?</option>
+            <option value="stress">😣 Stressed</option>
+            <option value="anxiety">😰 Anxious</option>
+            <option value="sadness">😢 Sad</option>
+            <option value="anger">😡 Angry</option>
+            <option value="tired">😴 Tired</option>
+            <option value="boredom">🥱 Bored</option>
+        </select>
+        <button type="submit">Get Suggestions</button>
+    </form>
+
+    {% if therapy %}
+        {% for mood, suggestions in therapy.items %}
+            <div class="tips-box">
+                <h3>{{ mood }} Tips ✨</h3>
+                <ul>
+                    {% for tip in suggestions %}
+                        <li>Tip {{ forloop.counter }}: {{ tip }}</li>
+                    {% endfor %}
+                </ul>
+                <form action="/therapy-suggestions/" method="get">
+                    <button class="done-btn" type="submit">✅ Done</button>
+                </form>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+</body>
+</html>

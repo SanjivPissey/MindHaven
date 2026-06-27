@@ -1,0 +1,14 @@
+{% extends 'admindashboard.html' %}
+{% block content %}
+<h2>All Surveys</h2>
+<table class="table table-striped">
+  <thead><tr><th>ID</th><th>User</th><th>Submitted At</th></tr></thead>
+  <tbody>
+    {% for survey in surveys %}
+      <tr><td>{{ survey.id }}</td><td>{{ survey.user.fullname }}</td><td>{{ survey.submitted_at }}</td></tr>
+    {% empty %}
+      <tr><td colspan="3">No surveys found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MindHaven – Project Gantt Chart</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px 60px;
+    }
+
+    /* ── Title ─────────────────────────────────── */
+    .chart-title {
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .chart-subtitle {
+      color: #a78bfa;
+      font-size: 0.95rem;
+      font-weight: 400;
+      margin-bottom: 32px;
+      text-align: center;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── Wrapper card ───────────────────────────── */
+    .card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 32px 28px 28px;
+      width: 100%;
+      max-width: 1180px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+      overflow-x: auto;
+    }
+
+    /* ── Grid table ─────────────────────────────── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+
+    /* header row */
+    thead th {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 8px 4px;
+      text-align: center;
+      color: #cbd5e1;
+      border-bottom: 2px solid rgba(255,255,255,0.15);
+    }
+    thead th.phase-col { text-align: left; padding-left: 12px; }
+    thead th.task-col  { text-align: left; padding-left: 8px;  }
+
+    /* Phase column */
+    td.phase-cell {
+      padding: 0 8px 0 12px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    .phase-badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-align: center;
+      line-height: 1.3;
+      color: #fff;
+    }
+
+    /* Task column */
+    td.task-cell {
+      padding: 5px 10px 5px 8px;
+      font-size: 0.72rem;
+      color: #e2e8f0;
+      white-space: nowrap;
+      font-weight: 400;
+    }
+
+    /* Week grid cells */
+    td.week-cell {
+      padding: 4px 3px;
+      position: relative;
+    }
+    .week-grid {
+      width: 100%;
+      height: 26px;
+      position: relative;
+    }
+
+    /* Bar */
+    .bar {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 20px;
+      border-radius: 5px;
+      left: 0;
+      right: 0;
+      transition: filter 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .bar:hover {
+      filter: brightness(1.25);
+      transform: translateY(-50%) scaleY(1.15);
+    }
+
+    /* Row separators */
+    tr.data-row {
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    tr.data-row:hover td { background: rgba(255,255,255,0.025); }
+
+    /* Phase group separator */
+    tr.phase-sep td {
+      padding-top: 6px;
+    }
+
+    /* Deliverable callout boxes */
+    .callout {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 0.63rem;
+      color: #e0e7ff;
+      line-height: 1.55;
+      margin: 6px 0;
+      max-width: 220px;
+    }
+    .callout strong {
+      display: block;
+      font-size: 0.65rem;
+      color: #a5f3fc;
+      margin-bottom: 3px;
+      font-weight: 700;
+    }
+    .callout li { margin-left: 10px; }
+
+    /* ── Legend ─────────────────────────────────── */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 26px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.72rem;
+      color: #cbd5e1;
+      font-weight: 500;
+    }
+    .legend-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="chart-title">MindHaven – Project Gantt Chart</div>
+<div class="chart-subtitle">Mental Health Support System · Work Breakdown Structure</div>
+
+<div class="card">
+  <table id="gantt">
+    <thead>
+      <tr>
+        <th class="phase-col" style="width:110px">Phase</th>
+        <th class="task-col"  style="width:200px">Task / Activity</th>
+        <th>Wk 1-2</th>
+        <th>Wk 3-4</th>
+        <th>Wk 5-6</th>
+        <th>Wk 7-8</th>
+        <th>Wk 9-10</th>
+        <th>Wk 11-12</th>
+        <th>Wk 13-14</th>
+        <th>Wk 15-16</th>
+        <th>Wk 17-18</th>
+        <th>Wk 19-20</th>
+      </tr>
+    </thead>
+    <tbody id="gantt-body">
+    </tbody>
+  </table>
+
+  <!-- Legend -->
+  <div class="legend" id="legend"></div>
+</div>
+
+<script>
+/* ── Colour palette (one per phase) ──────────────── */
+const PHASES = [
+  {
+    id: 'p1',
+    label: 'Phase 1\nPlanning &\nRequirements',
+    color: '#3b82f6',    // blue
+    bg:    '#1e3a5f',
+  },
+  {
+    id: 'p2',
+    label: 'Phase 2\nBackend &\nDatabase',
+    color: '#22c55e',    // green
+    bg:    '#14532d',
+  },
+  {
+    id: 'p3',
+    label: 'Phase 3\nFrontend\nDevelopment',
+    color: '#f97316',    // orange
+    bg:    '#7c2d12',
+  },
+  {
+    id: 'p4',
+    label: 'Phase 4\nTesting &\nValidation',
+    color: '#a855f7',    // purple
+    bg:    '#4a1d96',
+  },
+  {
+    id: 'p5',
+    label: 'Phase 5\nDocumentation\n& Delivery',
+    color: '#ef4444',    // red
+    bg:    '#7f1d1d',
+  },
+];
+
+/*
+  bars: array of [startWeekPair, endWeekPair] (both 1-indexed, inclusive)
+  Week pairs: 1=Wk1-2, 2=Wk3-4, … 10=Wk19-20
+  Same timing pattern as the SilverConnect screenshot.
+*/
+const TASKS = [
+  // ── Phase 1 ──────────────────────────────────────────────────────────
+  { phase:0, task:'Requirement Analysis',               bars:[[1,2]] },
+  { phase:0, task:'System Architecture Design',         bars:[[1,3]] },
+  { phase:0, task:'Data Model Design',                  bars:[[2,4]] },
+  { phase:0, task:'Workflow & UI Planning',             bars:[[3,5]] },
+
+  // ── Phase 2 ──────────────────────────────────────────────────────────
+  { phase:1, task:'Environment Setup (Django, SQLite)', bars:[[3,4]] },
+  { phase:1, task:'Auth & User Roles',                  bars:[[3,5]] },
+  { phase:1, task:'AI Chat Logic (Gemini API)',         bars:[[4,7]] },
+  { phase:1, task:'Mood & Stress Detection Engine',     bars:[[5,8]] },
+  { phase:1, task:'Crisis Detection Module',            bars:[[6,8]] },
+
+  // ── Phase 3 ──────────────────────────────────────────────────────────
+  { phase:2, task:'Patient Dashboard UI',               bars:[[6,8]]  },
+  { phase:2, task:'Psychologist Dashboard & Charts',    bars:[[7,9]]  },
+  { phase:2, task:'Resource Library (Yoga/Music)',      bars:[[8,10]] },
+  { phase:2, task:'Responsive Design & Accessibility',  bars:[[8,10]] },
+
+  // ── Phase 4 ──────────────────────────────────────────────────────────
+  { phase:3, task:'Unit & Integration Testing',         bars:[[9,11]]  },
+  { phase:3, task:'Functional & Performance Testing',   bars:[[9,12]] },
+
+  // ── Phase 5 ──────────────────────────────────────────────────────────
+  { phase:4, task:'Technical Documentation',            bars:[[10,12]] },
+  { phase:4, task:'User Manual',                        bars:[[11,13]] },
+  { phase:4, task:'Final Report & Presentation',        bars:[[13,14]] },
+];
+
+/* Callout boxes mirroring the SilverConnect screenshot style */
+const CALLOUTS = {
+  7: {   // appears near week-col index 7 (Wk 15-16)
+    title: 'Deliverables from Phase 2 used in Phase 3:',
+    items: [
+      'Gemini AI chat engine live',
+      'Mood/Stress tracking backend',
+      'Crisis detection integrated',
+      'Dynamic psychologist routing',
+      'Admin panel & user management',
+    ]
+  },
+  9: {   // appears near week-col index 9 (Wk 19-20)
+    title: 'Built in Phase 4 using Phase 3 outputs:',
+    items: [
+      'End-to-end flow tested',
+      'Chart.js mood graphs verified',
+      'Crisis alert paths validated',
+      'Mobile responsiveness checked',
+      'Security & access control audit',
+    ]
+  }
+};
+
+/* ── Build the table ─────────────────────────────── */
+const TOTAL_WEEKS = 10; // 10 pairs of 2-week blocks
+
+function buildTable() {
+  const tbody = document.getElementById('gantt-body');
+  let currentPhase = -1;
+
+  TASKS.forEach((task, rowIdx) => {
+    const tr = document.createElement('tr');
+    tr.className = 'data-row' + (task.phase !== currentPhase ? ' phase-sep' : '');
+
+    // ── Phase cell (rowspan handled via JS visibility trick) ──
+    if (task.phase !== currentPhase) {
+      currentPhase = task.phase;
+      const ph = PHASES[task.phase];
+      const phaseRows = TASKS.filter(t => t.phase === task.phase).length;
+
+      const td = document.createElement('td');
+      td.className = 'phase-cell';
+      td.rowSpan = phaseRows;
+      td.style.verticalAlign = 'middle';
+
+      const badge = document.createElement('div');
+      badge.className = 'phase-badge';
+      badge.style.background = ph.bg;
+      badge.style.borderLeft  = `4px solid ${ph.color}`;
+      badge.style.whiteSpace  = 'pre-line';
+      badge.textContent = ph.label;
+      td.appendChild(badge);
+      tr.appendChild(td);
+    }
+
+    // ── Task name ──
+    const tdTask = document.createElement('td');
+    tdTask.className = 'task-cell';
+    tdTask.textContent = task.task;
+    tr.appendChild(tdTask);
+
+    // ── Week cells ──
+    for (let w = 1; w <= TOTAL_WEEKS; w++) {
+      const td = document.createElement('td');
+      td.className = 'week-cell';
+
+      const grid = document.createElement('div');
+      grid.className = 'week-grid';
+
+      // draw bar(s) that cover this week
+      task.bars.forEach(([start, end]) => {
+        if (w >= start && w <= end) {
+          const bar = document.createElement('div');
+          bar.className = 'bar';
+          bar.style.background = `linear-gradient(90deg, ${PHASES[task.phase].color}dd, ${PHASES[task.phase].color})`;
+          bar.style.boxShadow  = `0 2px 8px ${PHASES[task.phase].color}66`;
+
+          // Extend bar to fill full cell if it's a mid segment
+          bar.style.left  = '0';
+          bar.style.right = '0';
+          grid.appendChild(bar);
+        }
+      });
+
+      td.appendChild(grid);
+      tr.appendChild(td);
+    }
+
+    tbody.appendChild(tr);
+  });
+
+  // ── Callout rows ──
+  // Insert them as additional floating annotations via absolute overlays
+  // (for simplicity, add after the last row of relevant phases)
+  insertCallouts();
+}
+
+function insertCallouts() {
+  // We'll add them as separate table rows spanning from week 8 onward
+  const tbody = document.getElementById('gantt-body');
+
+  // After Phase 2 rows, insert deliverable callout
+  const allRows = Array.from(tbody.querySelectorAll('tr'));
+
+  // Find index of last Phase 2 row
+  let lastP2 = -1, lastP3 = -1;
+  TASKS.forEach((t, i) => {
+    if (t.phase === 1) lastP2 = i;
+    if (t.phase === 2) lastP3 = i;
+  });
+
+  insertCalloutRow(tbody, lastP2, 7, CALLOUTS[7], '#22c55e');
+  insertCalloutRow(tbody, lastP3, 9, CALLOUTS[9], '#a855f7');
+}
+
+function insertCalloutRow(tbody, afterTaskIdx, weekStart, callout, color) {
+  if (!callout) return;
+  const rows = Array.from(tbody.querySelectorAll('tr.data-row'));
+  const refRow = rows[afterTaskIdx];
+  if (!refRow) return;
+
+  const tr = document.createElement('tr');
+
+  // empty phase + task cells
+  const blank1 = document.createElement('td'); blank1.colSpan = 2; tr.appendChild(blank1);
+
+  for (let w = 1; w <= TOTAL_WEEKS; w++) {
+    const td = document.createElement('td');
+    td.style.padding = '4px 3px';
+    if (w === weekStart) {
+      const colSpan = TOTAL_WEEKS - weekStart + 1;
+      td.colSpan = colSpan;
+
+      const box = document.createElement('div');
+      box.className = 'callout';
+      box.style.borderColor = color + '88';
+
+      const strong = document.createElement('strong');
+      strong.style.color = color;
+      strong.textContent = callout.title;
+      box.appendChild(strong);
+
+      const ul = document.createElement('ul');
+      ul.style.paddingLeft = '10px';
+      callout.items.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        ul.appendChild(li);
+      });
+      box.appendChild(ul);
+
+      td.appendChild(box);
+      tr.appendChild(td);
+      break;
+    }
+    tr.appendChild(td);
+  }
+
+  refRow.after(tr);
+}
+
+/* ── Legend ─────────────────────────────────────── */
+function buildLegend() {
+  const leg = document.getElementById('legend');
+  PHASES.forEach(ph => {
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+
+    const dot = document.createElement('div');
+    dot.className = 'legend-dot';
+    dot.style.background = ph.color;
+
+    const label = document.createElement('span');
+    label.textContent = ph.label.replace(/\n/g, ' ');
+
+    item.appendChild(dot);
+    item.appendChild(label);
+    leg.appendChild(item);
+  });
+}
+
+buildTable();
+buildLegend();
+</script>
+</body>
+</html>

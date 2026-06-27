@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>View Report | MindEase</title>
+
+  <link href="/media/assets/img/favicon.png" rel="icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Raleway&display=swap" rel="stylesheet">
+  <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/media/assets/css/main.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      --heading-font: "Poppins", sans-serif;
+      --nav-font: "Raleway", sans-serif;
+      --background-color: #f8f9fa;
+      --default-color: #444444;
+      --heading-color: #2c4964;
+      --accent-color: #1977cc;
+      --surface-color: #ffffff;
+      --contrast-color: #ffffff;
+      --pink-color: #ff69b4;
+      --light-gray: #f8f9fa;
+    }
+
+    body {
+      font-family: var(--default-font);
+      background-color: var(--background-color);
+      color: var(--default-color);
+      padding: 20px;
+    }
+
+    .report-container {
+      background: var(--surface-color);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      margin: 20px auto;
+      max-width: 800px;
+    }
+
+    .report-header {
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .report-title {
+      color: var(--heading-color);
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+
+    .brain-icon {
+      color: var(--pink-color);
+      font-size: 1.8em;
+      margin-bottom: 10px;
+      display: block;
+      text-align: center;
+    }
+
+    .report-meta {
+      color: #6c757d;
+      margin-bottom: 15px;
+      font-size: 0.9em;
+    }
+
+    .report-content {
+      white-space: pre-wrap;
+      margin-bottom: 20px;
+      line-height: 1.4;
+      font-size: 0.95em;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--accent-color);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      transition: all 0.2s ease;
+      font-size: 0.9em;
+    }
+
+    .back-button:hover {
+      text-decoration: underline;
+      background-color: rgba(25, 119, 204, 0.1);
+    }
+
+    .section-title {
+      color: var(--heading-color);
+      font-size: 1.2em;
+      margin-bottom: 12px;
+    }
+
+    .date-badge {
+      background-color: var(--accent-color);
+      color: white;
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-size: 0.8em;
+    }
+
+    .patient-info {
+      font-size: 0.9em;
+      font-weight: 500;
+    }
+
+    .report-section {
+      margin-bottom: 15px;
+      padding: 12px;
+      background: var(--light-gray);
+      border-radius: 6px;
+    }
+
+    .section-header {
+      color: var(--heading-color);
+      font-size: 1.1em;
+      margin-bottom: 8px;
+    }
+
+    .section-content {
+      font-size: 0.9em;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 768px) {
+      .report-container {
+        padding: 15px;
+        margin: 15px;
+      }
+
+      .report-title {
+        font-size: 1.3em;
+      }
+
+      .brain-icon {
+        font-size: 1.5em;
+      }
+
+      .report-section {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="report-container">
+    <a href="/psychologist_dashboard" class="back-button"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    
+    <div class="report-header">
+      <i class="fas fa-brain brain-icon"></i>
+      <h2 class="report-title">Report Details</h2>
+    </div>
+
+    <div class="report-meta">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="patient-info">Patient: {{ report.user.fullname }}</div>
+        </div>
+        <div class="col-md-6 text-end">
+          <span class="date-badge">Created: {{ report.created_at|date:"d M Y, h:i A" }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="report-content">
+      {{ report.content|linebreaks }}
+    </div>
+  </div>
+</body>
+</html>

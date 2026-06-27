@@ -1,0 +1,25 @@
+{% extends 'admindashboard.html' %}
+{% block content %}
+<h2>All Psychologists & Assignments</h2>
+<table class="table table-striped">
+  <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Assigned Users</th></tr></thead>
+  <tbody>
+    {% for psychologist in psychologists %}
+      <tr>
+        <td>{{ psychologist.id }}</td>
+        <td>{{ psychologist.fullname }}</td>
+        <td>{{ psychologist.email }}</td>
+        <td>
+          {% for assignment in assignments %}
+            {% if assignment.psychologist.id == psychologist.id %}
+              {{ assignment.user.fullname }}<br>
+            {% endif %}
+          {% endfor %}
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4">No psychologists found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

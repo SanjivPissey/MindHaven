@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thank You | Mental Health Survey</title>
+
+  <!-- Auto-Redirect after 8 seconds -->
+  <meta http-equiv="refresh" content="8;url=/userdashboard">
+
+  <!-- Styles -->
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      animation: fadeIn 1s ease-in;
+    }
+
+    .thank-you-container {
+      background: #ffffff;
+      padding: 40px 30px;
+      margin: 60px auto;
+      max-width: 600px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #0277bd;
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #333;
+      font-size: 17px;
+      margin-bottom: 20px;
+    }
+
+    .emoji {
+      font-size: 60px;
+      margin-bottom: 15px;
+      animation: bounce 1s infinite alternate;
+    }
+
+    .resources {
+      background-color: #e1f5fe;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    .resources h3 {
+      color: #01579b;
+      margin-top: 0;
+    }
+
+    .resources ul {
+      list-style: square;
+      padding-left: 20px;
+    }
+
+    .resources li {
+      margin-bottom: 10px;
+    }
+
+    .home-button {
+      background-color: #0288d1;
+      color: white;
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 30px;
+      transition: background 0.3s ease, transform 0.2s;
+      display: inline-block;
+    }
+
+    .home-button:hover {
+      background-color: #01579b;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-8px); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="thank-you-container">
+    <div class="emoji">🩵</div>
+    <h2>Thank You for Your Submission!</h2>
+    <p>We truly appreciate your time and thoughts. Every response helps create a better, more supportive environment for all.</p>
+    
+    <div class="resources">
+      <h3>💧 Self-Care & Wellness Tips</h3>
+      <ul>
+        <li>Take a few minutes each day to breathe deeply and relax.</li>
+        <li>Spend time outdoors – nature has a healing touch.</li>
+        <li>Stay connected with friends or family, even virtually.</li>
+        <li>Engage in hobbies or creative outlets that bring you joy.</li>
+        <li>Celebrate small victories and be kind to yourself.</li>
+      </ul>
+    </div>
+
+    <p>You have been matched with <strong>{{ psychologist_name }}</strong>.</p>
+    <p>They will reach out to you soon! 💬</p>
+
+    <a href="/userdashboard" class="home-button">🏠 Back to Home</a>
+  </div>
+
+</body>
+</html>

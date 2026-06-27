@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mental Health Assessment</title>
+  <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f5f9fc;
+      font-family: 'Roboto', sans-serif;
+      padding: 30px;
+    }
+    form {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #2c4964;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      color: #2c4964;
+    }
+    select, textarea, input {
+      margin-top: 5px;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #f2f6fc;
+    }
+    button {
+      margin-top: 20px;
+      background: #1977cc;
+      border: none;
+      padding: 12px 30px;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background: #125ea7;
+    }
+  </style>
+</head>
+<body>
+
+<form method="POST">
+  {% csrf_token %}
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} text-center" style="margin-bottom: 20px;">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <h2>Mental Health Quick Assessment</h2>
+
+  <label>1. How often do you feel anxious or worried?</label>
+  <select name="anxiety_level" required>
+    <option value="">Select...</option>
+    <option value="never">Never</option>
+    <option value="sometimes">Sometimes</option>
+    <option value="often">Often</option>
+    <option value="always">Always</option>
+  </select>
+
+  <label>2. Have you experienced a traumatic event recently?</label>
+  <select name="trauma_experience" required>
+    <option value="">Select...</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+
+  <label>3. Are you facing relationship or family difficulties?</label>
+  <select name="relationship_issues" required>
+    <option value="">Select...</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+
+  <label>4. How well are you sleeping these days?</label>
+  <select name="sleep_quality" required>
+    <option value="">Select...</option>
+    <option value="very_well">Very Well</option>
+    <option value="average">Average</option>
+    <option value="poor">Poor</option>
+  </select>
+
+  <label>5. Has your appetite changed recently?</label>
+  <select name="appetite_change" required>
+    <option value="">Select...</option>
+    <option value="no_change">No Change</option>
+    <option value="increased">Increased</option>
+    <option value="decreased">Decreased</option>
+  </select>
+
+  <label>6. How energetic or tired do you feel lately?</label>
+  <select name="energy_level" required>
+    <option value="">Select...</option>
+    <option value="energetic">Energetic</option>
+    <option value="average">Average</option>
+    <option value="very_tired">Very Tired</option>
+  </select>
+
+  <label>7. Are you facing difficulty controlling your emotions?</label>
+  <select name="emotional_control" required>
+    <option value="">Select...</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+
+  <label>8. How often do you socialize with others?</label>
+  <select name="social_interaction" required>
+    <option value="">Select...</option>
+    <option value="daily">Daily</option>
+    <option value="weekly">Weekly</option>
+    <option value="rarely">Rarely</option>
+    <option value="never">Never</option>
+  </select>
+
+  <label>9. Have you consulted a mental health professional before?</label>
+  <select name="past_mental_health" required>
+    <option value="">Select...</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+
+  <label>10. What is bothering you the most recently?</label>
+  <textarea name="specific_concern" rows="4" required></textarea>
+
+  <button type="submit">Submit Assessment</button>
+</form>
+
+</body>
+</html>

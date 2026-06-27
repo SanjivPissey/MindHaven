@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Generate Report | MindEase</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Favicons & Fonts -->
+  <link href="/media/assets/img/favicon.png" rel="icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Raleway&display=swap" rel="stylesheet">
+  <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/media/assets/css/main.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f7f9fc;
+      margin: 0;
+      padding: 0;
+    }
+    .main-content {
+      margin: 50px auto;
+      max-width: 900px;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    h2, h3 {
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      color: #1977cc;
+      margin-bottom: 30px;
+    }
+    h3 {
+      font-size: 1.4rem;
+      margin-top: 25px;
+    }
+    label {
+      font-weight: bold;
+      color: #2c4964;
+      margin-top: 20px;
+    }
+    textarea {
+      width: 100%;
+      border-radius: 10px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+      background: #f1f5f9;
+      resize: vertical;
+    }
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 12px;
+      background-color: #1977cc;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #125ea7;
+    }
+    .chat-history {
+      max-height: 400px;
+      overflow-y: auto;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      background-color: #f8f9fa;
+    }
+    .message {
+      padding: 10px 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      max-width: 80%;
+    }
+    .user-message {
+      background-color: #e3f2fd;
+      margin-left: auto;
+      text-align: right;
+    }
+    .bot-message {
+      background-color: #f5f5f5;
+    }
+    .message-time {
+      font-size: 12px;
+      color: #777;
+      margin-top: 5px;
+    }
+    .back-button {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #1977cc;
+      text-decoration: none;
+    }
+    .back-button:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="main-content">
+  <a href="/assigned_users" class="back-button"><i class="fas fa-arrow-left"></i> Back to Assigned Users</a>
+  
+  {% if user %}
+    <h2>Generate Report for {{ user.fullname }}</h2>
+  {% else %}
+    <h2>Generate Report</h2>
+  {% endif %}
+
+  {% if chat_messages %}
+    <h3>Recent Chat History</h3>
+    <div class="chat-history">
+      {% for message in chat_messages %}
+        <div class="message {% if message.sender == 'user' %}user-message{% else %}bot-message{% endif %}">
+          <div class="message-content">{{ message.text }}</div>
+          <div class="message-time">{{ message.created_at|date:"M d, Y h:i A" }}</div>
+        </div>
+      {% empty %}
+        <p class="text-center text-muted">No chat messages found.</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <form method="POST">
+    {% csrf_token %}
+    
+    {% if user %}
+      <input type="hidden" name="user_id" value="{{ user.id }}">
+    {% endif %}
+
+    <label>Summary:</label>
+    <textarea name="summary" rows="6" required placeholder="Write a detailed summary..."></textarea>
+
+    <label>Recommendations:</label>
+    <textarea name="recommendations" rows="6" required placeholder="Provide professional recommendations..."></textarea>
+
+    <button type="submit">Save Report</button>
+  </form>
+</div>
+
+</body>
+</html>

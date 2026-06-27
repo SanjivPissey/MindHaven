@@ -1,0 +1,60 @@
+{% extends 'admindashboard.html' %}
+{% block content %}
+<h2>Mood Analytics</h2>
+      <div class="dashboard-section">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Mood</th>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for mood in mood_counts %}
+              <tr>
+                <td>{{ mood.mood }}</td>
+                <td>{{ mood.count }}</td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="2">No mood data found.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+  <style>
+    .dashboard-section {
+      background: var(--surface-color);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
+    }
+
+    .dashboard-section:hover {
+      transform: translateY(-5px);
+    }
+
+    .table {
+      width: 100%;
+      margin-bottom: 1rem;
+      color: var(--default-color);
+    }
+
+    .table th {
+      font-weight: 600;
+      color: var(--heading-color);
+    }
+
+    .table td, .table th {
+      padding: 0.75rem;
+      vertical-align: middle;
+      border-top: 1px solid #dee2e6;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  </style>
+{% endblock %}

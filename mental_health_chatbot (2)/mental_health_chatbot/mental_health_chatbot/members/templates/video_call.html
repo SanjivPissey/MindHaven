@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Video Session | MindEase</title>
+    <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/media/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .nav-header {
+            background-color: #000;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .jitsi-container {
+            flex-grow: 1;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="nav-header">
+        <div>
+            <h4 class="mb-0 text-primary"><i class="bi bi-shield-check"></i> MindEase Secure Telehealth</h4>
+            <small class="text-secondary">Session with {% if request.user.role == 'psychologist' %}{{
+                appointment.user.fullname }}{% else %}{{ appointment.psychologist.fullname }}{% endif %}</small>
+        </div>
+        <div>
+            {% if request.user.role == 'psychologist' %}
+            <a href="{% url 'psychologist_appointments' %}" class="btn btn-outline-danger btn-sm"><i
+                    class="bi bi-x-circle"></i> Enable Call</a>
+            {% else %}
+            <a href="{% url 'book_appointment' %}" class="btn btn-outline-danger btn-sm"><i class="bi bi-x-circle"></i>
+                Leave Call</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- The actual Jitsi Video Meeting -->
+    <div class="jitsi-container">
+        <!-- We use the dynamically generated meet_link saved in the appointment -->
+        <iframe src="{{ appointment.meet_link }}" allow="camera; microphone; fullscreen; display-capture"
+            allowfullscreen></iframe>
+    </div>
+
+</body>
+
+</html>

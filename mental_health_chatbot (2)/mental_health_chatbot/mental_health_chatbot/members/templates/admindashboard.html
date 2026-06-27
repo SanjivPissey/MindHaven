@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Admin Dashboard | MindEase</title>
+
+  <!-- Favicons & Fonts -->
+  <link href="/media/assets/img/favicon.png" rel="icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- CSS Libraries -->
+  <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/media/assets/css/main.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --default-font: "Roboto", system-ui, sans-serif;
+      --heading-font: "Poppins", sans-serif;
+      --nav-font: "Raleway", sans-serif;
+      --background-color: #ffffff;
+      --default-color: #444444;
+      --heading-color: #2c4964;
+      --accent-color: #1977cc;
+      --surface-color: #ffffff;
+      --contrast-color: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--default-font);
+      background-color: var(--background-color);
+      color: var(--default-color);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--heading-font);
+      color: var(--heading-color);
+    }
+
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: var(--accent-color);
+      color: var(--contrast-color);
+      padding-top: 20px;
+      z-index: 999;
+    }
+
+    .sidebar .logo {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .sidebar .logo h1 {
+      font-family: var(--heading-font);
+      font-size: 24px;
+      color: var(--contrast-color);
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar ul li a {
+      color: var(--contrast-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      font-family: var(--nav-font);
+    }
+
+    .sidebar ul li a i {
+      margin-right: 10px;
+    }
+
+    .sidebar ul li:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 40px 20px;
+    }
+
+    .dashboard-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+
+    .dashboard-section {
+      background: var(--surface-color);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
+    }
+
+    .dashboard-section:hover {
+      transform: translateY(-5px);
+    }
+
+    @media screen and (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="sidebar">
+    <div class="logo">
+      <h1>MindEase Admin</h1>
+    </div>
+    <ul>
+      <li><a href="/admin_user_list"><i class="fas fa-users"></i>Users</a></li>
+      <li><a href="/admin_psychologist_list"><i class="fas fa-user-md"></i>Psychologists</a></li>
+      <li><a href="/admin_survey_list"><i class="fas fa-clipboard-list"></i>Surveys</a></li>
+      <li><a href="/admin_contact_messages"><i class="fas fa-envelope"></i>Contact Messages</a></li>
+      <li><a href="/admin_mood_analytics"><i class="fas fa-chart-bar"></i>Mood Analytics</a></li>
+      <li><a href="/admin_report_list"><i class="fas fa-file-alt"></i>Reports</a></li>
+      <li><a href="/user_logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <h2 class="dashboard-title">Welcome Admin! 🛠️</h2>
+
+    <div class="dashboard-section">
+      {% block content %}
+      <!-- Admin-specific content will be injected here -->
+      {% endblock %}
+    </div>
+  </div>
+
+  <!-- Vendor JS Files -->
+  <script src="/media/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/media/assets/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Reset Password | Mental Health Chatbot</title>
+
+    <!-- Fonts & Bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Raleway&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --default-font: "Roboto", system-ui, sans-serif;
+            --heading-font: "Poppins", sans-serif;
+            --nav-font: "Raleway", sans-serif;
+            --background-color: #f0f2f5;
+            --default-color: #444;
+            --heading-color: #2c4964;
+            --accent-color: #1977cc; /* Blue theme */
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: var(--default-font);
+            background-color: var(--background-color);
+            color: var(--default-color);
+            height: 100vh;
+            margin: 0;
+        }
+
+        h4 {
+            font-family: var(--heading-font);
+            color: var(--accent-color);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #155fa0;
+            border-color: #155fa0;
+        }
+
+        .text-danger {
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body class="d-flex align-items-center justify-content-center">
+    <div class="card p-4 shadow" style="max-width: 400px; width: 100%;">
+        <h4 class="text-center mb-3">Set New Password</h4>
+        {% if validlink %}
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary w-100">Reset Password</button>
+            </form>
+        {% else %}
+            <div class="alert alert-danger">
+                The reset link is invalid or has expired.
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

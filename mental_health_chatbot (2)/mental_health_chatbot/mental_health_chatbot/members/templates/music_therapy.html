@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Therapy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: white;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .tip-box {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-size: 18px;
+        }
+        .nav-btn {
+            display: inline-block;
+            margin: 20px 10px 0 10px;
+            padding: 12px 18px;
+            background: #007BFF;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-btn:hover {
+            background: #0056b3;
+        }
+        .feeling-message {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .audio-player {
+            width: 100%;
+            max-width: 480px;
+            margin: 20px auto;
+            border-radius: 8px;
+            background: #f1f1f1;
+            padding: 10px;
+        }
+        audio {
+            width: 100%;
+            border-radius: 5px;
+            height: 40px;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎼 Music Therapy for Mental Health 🎧</h1>
+        
+        {% for tip in music_tips %}
+            <div class="tip-box">{{ tip }}</div>
+        {% endfor %}
+
+        <div class="feeling-message">
+            "Feeling anxious? Try this track to relax your mind."
+        </div>
+
+        <div class="audio-player">
+            <audio controls>
+                <source src="/media/music.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+
+        <a href="{% url 'exercises_and_yoga' %}" class="nav-btn">⬅ Previous</a>
+        <a href="{% url 'userdashboard' %}" class="nav-btn">Home ➡</a>
+
+    </div>
+</body>
+</html>

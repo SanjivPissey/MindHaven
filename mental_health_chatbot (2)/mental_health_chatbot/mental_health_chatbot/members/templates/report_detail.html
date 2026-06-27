@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Report Details | MindEase</title>
+
+  <link href="/media/assets/img/favicon.png" rel="icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Raleway&display=swap" rel="stylesheet">
+  <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/media/assets/css/main.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f7f9fc;
+      padding: 20px;
+    }
+
+    .report-detail-container {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      padding: 40px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .section-title i {
+      color: pink;
+      margin-right: 10px;
+    }
+
+    h4 {
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    p strong {
+      color: #0d6efd;
+    }
+
+    .btn-secondary {
+      background-color: #0d6efd;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background-color: #0b5ed7;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-5">
+    <div class="report-detail-container">
+      <h2 class="section-title"><i class="fas fa-brain"></i> Report Details</h2>
+
+      <div>
+        <h4>Patient: {{ report.user.fullname }}</h4>
+        <p><strong>Created:</strong> {{ report.created_at|date:"d M Y, h:i A" }}</p>
+
+        <p><strong>Summary:</strong></p>
+        <p>{{ report.summary|linebreaks }}</p>
+
+        <p><strong>Recommendations:</strong></p>
+        <p>{{ report.recommendations|linebreaks }}</p>
+
+        <a href="{% url 'reports_list' %}" class="btn btn-secondary mt-4"><i class="fas fa-arrow-left"></i> Back to Reports</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

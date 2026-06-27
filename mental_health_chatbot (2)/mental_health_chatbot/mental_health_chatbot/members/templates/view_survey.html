@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Survey Details | MindEase</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Favicons & Fonts -->
+  <link href="/media/assets/img/favicon.png" rel="icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Raleway&display=swap" rel="stylesheet">
+  <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/media/assets/css/main.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --default-font: "Roboto", sans-serif;
+      --heading-font: "Poppins", sans-serif;
+      --nav-font: "Raleway", sans-serif;
+      --background-color: #f7f9fc;
+      --surface-color: #ffffff;
+      --accent-color: #1977cc;
+      --heading-color: #2c4964;
+      --text-color: #555;
+    }
+
+    body {
+      font-family: var(--default-font);
+      background-color: var(--background-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--heading-font);
+      color: var(--heading-color);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: var(--accent-color);
+      padding-top: 20px;
+    }
+
+    .sidebar .logo h1 {
+      color: white;
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 20px;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-family: var(--nav-font);
+      display: flex;
+      align-items: center;
+    }
+
+    .sidebar ul li:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 250px;
+      padding: 40px;
+    }
+
+    .survey-container {
+      background-color: var(--surface-color);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .survey-heading {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: var(--heading-color);
+    }
+
+    .form-group .answer {
+      background: #f1f5f9;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 15px;
+      color: var(--text-color);
+      border: 1px solid #dee2e6;
+    }
+
+    @media screen and (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+      .main-content {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="logo">
+    <h1>MindEase</h1>
+  </div>
+  <ul>
+    <li><a href="/psychologist_dashboard"><i class="fas fa-home"></i>Dashboard</a></li>
+    <li><a href="/profile"><i class="fas fa-user"></i>My Profile</a></li>
+    <li><a href="/assigned_users"><i class="fas fa-users"></i>Assigned Users</a></li>
+      <li><a href="/psychologist_appointments/"><i class="fas fa-calendar-alt"></i>Appointments</a></li>
+
+    <li><a href="/view_survey"><i class="fas fa-clipboard-list"></i>Survey Forms</a></li>
+    <li><a href="/chat_history"><i class="fas fa-comments"></i>Chat Histories</a></li>
+    <li><a href="/mood_insights"><i class="fas fa-chart-line"></i>Mood Insights</a></li>
+    <li><a href="/reports"><i class="fas fa-file-medical"></i>Reports</a></li>
+    <li><a href="/user_logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+  </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="survey-container">
+    {% if is_list %}
+      <h2 class="survey-heading">Assigned User's Surveys</h2>
+      <div class="form-section">
+        {% if user_surveys %}
+          <ul style="list-style:none; padding:0;">
+            {% for entry in user_surveys %}
+              <li style="margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 15px;">
+                <h4>{{ entry.user.fullname }} ({{ entry.user.email }})</h4>
+                <div><strong>Submitted:</strong> {{ entry.survey.submitted_at|date:"M d, Y h:i A" }}</div>
+                <div><strong>Anxiety Level:</strong> {{ entry.survey.anxiety_level }}</div>
+                <div><strong>Relationship Issues:</strong> {{ entry.survey.relationship_issues }}</div>
+                <a href="/view_survey/{{ entry.user.id }}" class="btn btn-primary btn-sm mt-2">View Full Survey</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="text-center text-muted">No surveys found for assigned users.</p>
+        {% endif %}
+      </div>
+    {% elif survey %}
+      <h2 class="survey-heading">Survey Details for {{ survey.user.fullname }}</h2>
+      <div class="form-section">
+        <div class="form-group">
+          <label>Anxiety Level:</label>
+          <div class="answer">{{ survey.anxiety_level }}</div>
+        </div>
+
+        <div class="form-group">
+          <label>Trauma Experience:</label>
+          <div class="answer">{{ survey.trauma_experience }}</div>
+        </div>
+
+        <div class="form-group">
+          <label>Relationship Issues:</label>
+          <div class="answer">{{ survey.relationship_issues }}</div>
+        </div>
+
+        <div class="form-group">
+          <label>Sleep Quality:</label>
+          <div class="answer">{{ survey.sleep_quality }}</div>
+        </div>
+
+        <div class="form-group">
+          <label>Appetite Change:</label>
+          <div class="answer">{{ survey.appetite_change }}</div>
+        </div>
+
+        <div class="form-group">
+          <label>Energy Level:</label>
+          <div class="answer">{{ survey.energy_level }}</div>
+        </div>
+
+        <div class="form-group">
+          <label>Emotional Control:</label>
+          <div class="answer">{{ survey.emotional_control }}</div>
+        </div>
+
+        <div class="form-group">
+          <label>Social Interaction:</label>
+          <div class="answer">{{ survey.social_interaction }}</div>
+        </div>
+
+        <div class="form-group">
+          <label>Past Mental Health Consultation:</label>
+          <div class="answer">{{ survey.past_mental_health }}</div>
+        </div>
+
+        <div class="form-group">
+          <label>Specific Concern:</label>
+          <div class="answer">{{ survey.specific_concern }}</div>
+        </div>
+      </div>
+    {% endif %}
+    {% if not is_list and not survey %}
+      <p class="text-center text-muted">No survey data available.</p>
+    {% endif %}
+
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

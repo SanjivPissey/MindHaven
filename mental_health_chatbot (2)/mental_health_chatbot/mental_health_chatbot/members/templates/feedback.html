@@ -1,0 +1,122 @@
+{% block content %}
+<style>
+  body {
+    background: #f5f9fc;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .feedback-form-container {
+    max-width: 700px;
+    margin: auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+  }
+
+  .feedback-form-container h2 {
+    text-align: center;
+    color: #2c4964;
+    margin-bottom: 20px;
+  }
+
+  label {
+    font-weight: bold;
+    margin-top: 15px;
+    color: #2c4964;
+  }
+
+  .form-control {
+    margin-top: 5px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f2f6fc;
+  }
+
+  .text-danger {
+    font-size: 0.9rem;
+    margin-top: 5px;
+  }
+
+  button {
+    margin-top: 25px;
+    background: #1977cc;
+    border: none;
+    padding: 12px 30px;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  button:hover {
+    background: #125ea7;
+  }
+
+  /* Added margin-bottom for spacing between questions */
+  .feedback-form-container div {
+    margin-bottom: 20px; /* Adjust the value for more or less spacing */
+  }
+</style>
+
+<div class="feedback-form-container">
+  <form method="POST">
+    {% csrf_token %}
+    <h2>We Value Your Feedback</h2>
+
+    <div>
+      <label for="id_helpful">1. Was the chatbot helpful in addressing your concerns?</label>
+      {{ form.helpful }}
+      {% if form.helpful.errors %}
+        <div class="text-danger">{{ form.helpful.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div>
+      <label for="id_ease_of_use">2. How easy was it to use the platform?</label>
+      {{ form.ease_of_use }}
+      {% if form.ease_of_use.errors %}
+        <div class="text-danger">{{ form.ease_of_use.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div>
+      <label for="id_dashboard_feedback">3. Was the mood tracking and dashboard feature useful?</label>
+      {{ form.dashboard_feedback }}
+      {% if form.dashboard_feedback.errors %}
+        <div class="text-danger">{{ form.dashboard_feedback.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div>
+      <label for="id_satisfaction">4. How satisfied are you with the overall service?</label>
+      {{ form.satisfaction }}
+      {% if form.satisfaction.errors %}
+        <div class="text-danger">{{ form.satisfaction.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div>
+      <label for="id_recommend">5. Would you recommend our chatbot to others?</label>
+      {{ form.recommend }}
+      {% if form.recommend.errors %}
+        <div class="text-danger">{{ form.recommend.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div>
+      <label for="id_suggestions">6. Any suggestions for improving our services?</label>
+      {{ form.suggestions }}
+      {% if form.suggestions.errors %}
+        <div class="text-danger">{{ form.suggestions.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <button type="submit">Submit Feedback</button>
+  </form>
+</div>
+{% endblock %}

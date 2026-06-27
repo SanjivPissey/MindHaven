@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mood Insights Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary-color: #1977cc;
+      --accent-color: #1977cc;
+      --default-color: #333;
+      --background-color: #f8f9fa;
+      --text-color: #333;
+      --border-color: #dee2e6;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      padding: 20px;
+    }
+
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .dashboard-title {
+      color: var(--primary-color);
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .dashboard-box {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .stats-container {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .stat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 15px;
+      background-color: var(--accent-color);
+      color: white;
+      font-weight: 500;
+      font-size: 0.9em;
+    }
+
+    .suggestion {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+      border: 1px solid var(--border-color);
+      font-size: 0.95em;
+    }
+
+    .suggestion h3 {
+      color: var(--primary-color);
+      margin-bottom: 8px;
+      font-size: 1.1em;
+    }
+
+    .suggestion p {
+      color: var(--text-color);
+      margin: 0;
+    }
+
+    canvas {
+      margin: 20px 0;
+    }
+
+    @media screen and (max-width: 768px) {
+      .main-content {
+        margin-left: 0;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-content">
+    <h2 class="dashboard-title">Mood Insights Dashboard</h2>
+    {% if has_mood_data %}
+      <div class="dashboard-box">
+        <canvas id="moodChart" height="100"></canvas>
+      </div>
+
+      <div class="dashboard-box">
+        <div id="emotionStats" class="stats-container">
+          <span class="stat-badge" id="streakBadge">Loading streak...</span>
+          <span class="stat-badge" id="emotionBadge">Top Emotion: ...</span>
+        </div>
+        <div class="suggestion" id="suggestionText">Loading tip...</div>
+      </div>
+    {% else %}
+      <div class="dashboard-box" style="text-align: center;">
+        <p style="font-size: 16px; color: var(--default-color); margin-bottom: 15px;">
+          No mood data yet! Start chatting with the bot to track your mood.
+        </p>
+        <a href="{% url 'ai_chat_support' %}" class="suggestion" style="display: inline-block; padding: 10px 20px; background: var(--accent-color); color: var(--text-color); border-radius: 25px; text-decoration: none;">
+          Start Chatting
+        </a>
+      </div>
+    {% endif %}
+  </div>
+
+  <script>
+    fetch('/mood-insights-data/')
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch mood data');
+        }
+        return res.json();
+      })
+      .then(data => {
+        const ctx = document.getElementById('moodChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: data.labels,
+            datasets: [{
+              label: 'Mood Over Time',
+              data: data.scores,
+              borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-color'),
+              backgroundColor: 'rgba(25, 119, 204, 0.2)',
+              borderWidth: 2,
+              pointRadius: 4,
+              pointBackgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-color'),
+              tension: 0.3,
+              fill: true
+            }]
+          },
+          options: {
+            plugins: {
+              legend: {
+                display: false
+              }
+            },
+            scales: {
+              y: {
+                min: 1,
+                max: 5,
+                ticks: {
+                  stepSize: 1,
+                  callback: function(val) {
+                    return ['Anxious', 'Sad', 'Neutral', 'Calm', 'Happy'][val-1];
+                  },
+                  color: getComputedStyle(document.documentElement).getPropertyValue('--default-color'),
+                  font: {
+                    size: 10
+                  }
+                },
+                grid: {
+                  color: 'rgba(0, 0, 0, 0.1)'
+                }
+              },
+              x: {
+                ticks: {
+                  color: getComputedStyle(document.documentElement).getPropertyValue('--default-color'),
+                  font: {
+                    size: 10
+                  }
+                },
+                grid: {
+                  color: 'rgba(0, 0, 0, 0.1)'
+                }
+              }
+            }
+          }
+        });
+
+        document.getElementById('streakBadge').textContent = `Calm Streak: ${data.streak} day(s)`;
+        document.getElementById('emotionBadge').textContent = `Mostly Feeling: ${data.top_emotion}`;
+        document.getElementById('suggestionText').textContent = data.suggestion;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('streakBadge').textContent = 'Calm Streak: 0 days';
+        document.getElementById('emotionBadge').textContent = 'Mostly Feeling: No data yet';
+        document.getElementById('suggestionText').textContent = 'Start chatting with the bot to track your mood!';
+      });
+  </script>
+</body>
+</html>

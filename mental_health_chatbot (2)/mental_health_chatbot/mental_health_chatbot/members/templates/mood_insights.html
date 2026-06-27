@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    :root {
+      --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      --heading-font: "Poppins", sans-serif;
+      --nav-font: "Raleway", sans-serif;
+      --background-color: #ffffff;
+      --default-color: #444444;
+      --heading-color: #2c4964;
+      --accent-color: #1977cc;
+      --surface-color: #ffffff;
+      --contrast-color: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--default-font);
+      background-color: var(--background-color);
+      color: var(--default-color);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: var(--heading-font);
+      color: var(--heading-color);
+    }
+
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: var(--accent-color);
+      color: var(--contrast-color);
+      padding-top: 20px;
+      z-index: 999;
+    }
+
+    .sidebar .logo {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .sidebar .logo h1 {
+      font-family: var(--heading-font);
+      font-size: 24px;
+      color: var(--contrast-color);
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar ul li a {
+      color: var(--contrast-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      font-family: var(--nav-font);
+    }
+
+    .sidebar ul li a i {
+      margin-right: 10px;
+    }
+
+    .sidebar ul li:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 40px 20px;
+    }
+
+    .dashboard-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+
+    .dashboard-box {
+      background: var(--surface-color);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
+      text-align: center;
+    }
+
+    .dashboard-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .box-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+      color: var(--accent-color);
+    }
+
+    .box-value {
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--heading-color);
+    }
+
+    @media screen and (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+    }
+  </style>
+  <title>Mood Insights | MindEase</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Favicons & Fonts -->
+  <link href="/media/assets/img/favicon.png" rel="icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Raleway&display=swap"
+    rel="stylesheet">
+  <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/media/assets/css/main.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+
+  <style>
+    :root {
+      --default-font: "Roboto", sans-serif;
+      --heading-font: "Poppins", sans-serif;
+      --nav-font: "Raleway", sans-serif;
+      --background-color: #f7f9fc;
+      --surface-color: #ffffff;
+      --accent-color: #1977cc;
+      --heading-color: #2c4964;
+      --text-color: #555;
+    }
+
+    body {
+      font-family: var(--default-font);
+      background-color: var(--background-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--heading-font);
+      color: var(--heading-color);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: var(--accent-color);
+      padding-top: 20px;
+    }
+
+    .sidebar .logo h1 {
+      color: white;
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 20px;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-family: var(--nav-font);
+      display: flex;
+      align-items: center;
+    }
+
+    .sidebar ul li a i {
+      margin-right: 10px;
+    }
+
+    .sidebar ul li:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 250px;
+      padding: 40px;
+    }
+
+    .users-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .user-card {
+      background-color: var(--surface-color);
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .user-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .user-card h3 {
+      margin-top: 0;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    .insights-container {
+      background-color: var(--surface-color);
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+
+    .charts-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .chart-wrapper {
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .mood-entries {
+      margin-top: 30px;
+    }
+
+    .mood-entry {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .mood-happy {
+      color: #4caf50;
+    }
+
+    .mood-calm {
+      color: #2196f3;
+    }
+
+    .mood-neutral {
+      color: #9e9e9e;
+    }
+
+    .mood-sad {
+      color: #ff9800;
+    }
+
+    .mood-anxious {
+      color: #f44336;
+    }
+
+    .confidence-badge {
+      background-color: #e3f2fd;
+      color: #1976d2;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+
+    .back-button:hover {
+      text-decoration: underline;
+    }
+
+    @media screen and (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .charts-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">
+      <h1>MindEase</h1>
+    </div>
+    <ul>
+      <li><a href="/psychologist_dashboard"><i class="fas fa-home"></i>Dashboard</a></li>
+      <li><a href="/profile"><i class="fas fa-user"></i>My Profile</a></li>
+      <li><a href="/assigned_users"><i class="fas fa-users"></i>Assigned Users</a></li>
+      <li><a href="/psychologist_appointments/"><i class="fas fa-calendar-alt"></i>Appointments</a></li>
+
+      <li><a href="/view_survey"><i class="fas fa-clipboard-list"></i>Survey Forms</a></li>
+      <li><a href="/chat_history"><i class="fas fa-comments"></i>Chat Histories</a></li>
+      <li><a href="/mood_insights"><i class="fas fa-chart-line"></i>Mood Insights</a></li>
+      <li><a href="/reports"><i class="fas fa-file-medical"></i>Reports</a></li>
+      <li><a href="/user_logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    {% if selected_user %}
+    <a href="/mood_insights" class="back-button"><i class="fas fa-arrow-left"></i> Back to All Users</a>
+    <div class="insights-container">
+      <h3>Mood Insights: {{ selected_user.fullname }}</h3>
+
+      <div class="confidence-info">
+        <p>Average Confidence: {{ avg_confidence }}%</p>
+      </div>
+
+      <div class="charts-container">
+        <div class="chart-box">
+          <h4>Mood Distribution</h4>
+          <canvas id="moodChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+          <h4>Mood Trends (Last 30 Days)</h4>
+          <canvas id="trendChart"></canvas>
+        </div>
+      </div>
+
+      <div class="insights-list">
+        <h4>Recent Mood Insights</h4>
+        <div class="insights-grid">
+          {% for insight in mood_insights %}
+          <div class="insight-card">
+            <div class="insight-header">
+              <span class="insight-date">{{ insight.created_at|date:"M d, Y" }}</span>
+              <span class="insight-mood {{ insight.mood|lower }}">{{ insight.mood }}</span>
+            </div>
+            <div class="insight-content">
+              <div class="confidence-score">
+                Confidence: {% widthratio insight.confidence_score 1 100 %}%
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-center text-muted">No mood insights found.</p>
+          {% endfor %}
+        </div>
+
+        <h4>Recent User Moods</h4>
+        <div class="insights-grid">
+          {% for mood in user_moods %}
+          <div class="insight-card">
+            <div class="insight-header">
+              <span class="insight-date">{{ mood.created_at|date:"M d, Y" }}</span>
+              <span class="insight-mood {{ mood.mood|lower }}">{{ mood.mood }}</span>
+            </div>
+            <div class="insight-content">
+              <div class="stress-level">
+                Stress Level: {{ mood.stress_level }}
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-center text-muted">No user moods found.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Mood Distribution Chart
+      const moodLabels = JSON.parse('{{ mood_labels|safe }}');
+      const moodCounts = JSON.parse('{{ mood_counts|safe }}');
+      const moodPercentages = JSON.parse('{{ mood_percentages|safe }}');
+
+      const moodCtx = document.getElementById('moodChart').getContext('2d');
+      const moodChart = new Chart(moodCtx, {
+        type: 'doughnut',
+        data: {
+          labels: moodLabels,
+          datasets: [{
+            data: moodCounts,
+            backgroundColor: [
+              '#4CAF50', // Happy
+              '#2196F3', // Calm
+              '#9E9E9E', // Neutral
+              '#F44336', // Sad
+              '#FFC107'  // Anxious
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Mood Distribution'
+            },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  let label = context.label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  if (context.raw !== null) {
+                    label += context.raw + ' (' + Math.round(moodPercentages[context.dataIndex]) + '%)';
+                  }
+                  return label;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // Mood Trends Chart
+      const dates = JSON.parse('{{ dates_labels|safe }}');
+      const happyValues = JSON.parse('{{ happy_values|safe }}');
+      const calmValues = JSON.parse('{{ calm_values|safe }}');
+      const neutralValues = JSON.parse('{{ neutral_values|safe }}');
+      const sadValues = JSON.parse('{{ sad_values|safe }}');
+      const anxiousValues = JSON.parse('{{ anxious_values|safe }}');
+
+      const trendCtx = document.getElementById('trendChart').getContext('2d');
+      const trendChart = new Chart(trendCtx, {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [
+            {
+              label: 'Happy',
+              data: happyValues,
+              borderColor: '#4CAF50',
+              backgroundColor: 'rgba(76, 175, 80, 0.1)',
+              tension: 0.1
+            },
+            {
+              label: 'Calm',
+              data: calmValues,
+              borderColor: '#2196F3',
+              backgroundColor: 'rgba(33, 150, 243, 0.1)',
+              tension: 0.1
+            },
+            {
+              label: 'Neutral',
+              data: neutralValues,
+              borderColor: '#9E9E9E',
+              backgroundColor: 'rgba(158, 158, 158, 0.1)',
+              tension: 0.1
+            },
+            {
+              label: 'Sad',
+              data: sadValues,
+              borderColor: '#F44336',
+              backgroundColor: 'rgba(244, 67, 54, 0.1)',
+              tension: 0.1
+            },
+            {
+              label: 'Anxious',
+              data: anxiousValues,
+              borderColor: '#FFC107',
+              backgroundColor: 'rgba(255, 193, 7, 0.1)',
+              tension: 0.1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          interaction: {
+            mode: 'index',
+            intersect: false,
+          },
+          stacked: false,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Mood Trends (Last 30 Days)'
+            }
+          },
+          scales: {
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    </script>
+    {% else %}
+    <h2>Mood Insights</h2>
+    <p class="mb-4">Select a user to view their mood insights:</p>
+
+    <div class="users-container">
+      {% for user in assigned_users %}
+      <div class="user-card">
+        <h3>{{ user.fullname }}</h3>
+        <p><i class="fas fa-envelope"></i> {{ user.email }}</p>
+        <p>
+          Current Mood:
+          <span class="
+              {% if user.latest_mood == 'Happy' %}text-success
+              {% elif user.latest_mood == 'Calm' %}text-primary
+              {% elif user.latest_mood == 'Neutral' %}text-secondary
+              {% elif user.latest_mood == 'Sad' %}text-warning
+              {% elif user.latest_mood == 'Anxious' %}text-danger
+              {% endif %}">
+            <strong>{{ user.latest_mood }}</strong>
+          </span>
+        </p>
+        <a href="/mood_insights/{{ user.id }}" class="btn btn-primary">View Mood Insights</a>
+      </div>
+      {% empty %}
+      <p class="text-center text-muted">No assigned users found.</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+</body>
+
+</html>

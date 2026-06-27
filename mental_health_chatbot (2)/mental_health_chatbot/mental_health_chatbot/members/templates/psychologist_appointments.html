@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Psychologist Appointments | MindEase</title>
+    <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/media/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/media/assets/css/main.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+        }
+
+        .appt-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+
+        .appt-row:last-child {
+            border-bottom: none;
+        }
+
+        .time-box {
+            background: #eef2f5;
+            color: #1977cc;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand text-primary fw-bold" href="{% url 'psychologist_dashboard' %}">MindEase
+                Psychologist</a>
+            <a href="{% url 'psychologist_dashboard' %}" class="btn btn-outline-primary btn-sm">Back to Dashboard</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="main-card">
+                    <h2 class="text-primary mb-4"><i class="bi bi-calendar-check"></i> My Appointments</h2>
+
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    {% if appointments %}
+                    <div class="appointment-list">
+                        {% for appt in appointments %}
+                        <div class="appt-row">
+                            <div class="d-flex align-items-center">
+                                <div class="time-box me-4">
+                                    <div class="small">{{ appt.date|date:"M d" }}</div>
+                                    <div>{{ appt.time|time:"H:i" }}</div>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1 text-dark">{{ appt.user.fullname }}</h5>
+                                    <p class="mb-0 text-muted"><i class="bi bi-envelope"></i> {{ appt.user.email }}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <span
+                                    class="badge {% if appt.status == 'Scheduled' %}bg-primary{% elif appt.status == 'Completed' %}bg-success{% else %}bg-secondary{% endif %} me-3">{{
+                                    appt.status }}</span>
+                                {% if appt.status == 'Scheduled' %}
+                                <a href="{% url 'video_call' appt.id %}" class="btn btn-success btn-sm"><i
+                                        class="bi bi-camera-video"></i> Start Session</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-light border text-center text-muted">
+                        <i class="bi bi-inbox fs-4 d-block mb-2"></i>
+                        You have no appointments scheduled at this time.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

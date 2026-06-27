@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat History - {{ user.username }}</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Raleway&display=swap" rel="stylesheet">
+  <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/media/assets/css/main.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --default-font: "Roboto", sans-serif;
+      --heading-font: "Poppins", sans-serif;
+      --nav-font: "Raleway", sans-serif;
+      --background-color: #f7f9fc;
+      --surface-color: #ffffff;
+      --accent-color: #1977cc;
+      --heading-color: #2c4964;
+      --text-color: #555;
+      --user-message-bg: #e3f2fd;
+      --bot-message-bg: #f5f5f5;
+    }
+
+    body {
+      font-family: var(--default-font);
+      background-color: var(--background-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--heading-font);
+      color: var(--heading-color);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: var(--accent-color);
+      padding-top: 20px;
+    }
+
+    .sidebar .logo h1 {
+      color: white;
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 20px;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-family: var(--nav-font);
+      display: flex;
+      align-items: center;
+    }
+
+    .sidebar ul li a i {
+      margin-right: 10px;
+    }
+
+    .sidebar ul li:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 250px;
+      padding: 40px;
+    }
+
+    .user-info {
+      background-color: var(--surface-color);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-container {
+      max-height: 600px;
+      overflow-y: auto;
+      background-color: var(--surface-color);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .message {
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      max-width: 80%;
+    }
+
+    .user-message {
+      background-color: var(--user-message-bg);
+      margin-left: auto;
+    }
+
+    .bot-message {
+      background-color: var(--bot-message-bg);
+    }
+
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 0.9em;
+      color: var(--text-color);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">
+      <h1>MindEase</h1>
+    </div>
+    <ul>
+      <li><a href="/psychologist_dashboard"><i class="fas fa-home"></i>Dashboard</a></li>
+      <li><a href="/psychologist_profile"><i class="fas fa-user"></i>My Profile</a></li>
+      <li><a href="/assigned_users"><i class="fas fa-users"></i>Assigned Users</a></li>
+      <li><a href="/view_survey_list"><i class="fas fa-clipboard-list"></i>Survey Forms</a></li>
+      <li><a href="/chat_history"><i class="fas fa-comments"></i>Chat Histories</a></li>
+      <li><a href="/mood_insights"><i class="fas fa-chart-line"></i>Mood Insights</a></li>
+      <li><a href="/reports"><i class="fas fa-file-medical"></i>Reports</a></li>
+      <li><a href="/user_logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>Chat History - {{ user.username }}</h1>
+    
+    <div class="user-info">
+      <h3>User Information</h3>
+      <p><strong>Username:</strong> {{ user.username }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+    </div>
+
+    <div class="chat-container">
+      {% for message in messages %}
+        <div class="message {{ message.sender }}-message">
+          <div class="message-header">
+            <span class="message-author">{{ message.sender|title }}:</span>
+            <span class="message-time">{{ message.created_at|date:"M d, Y H:i" }}</span>
+          </div>
+          <div class="message-content">
+            {{ message.text }}
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-center text-muted">No messages found.</p>
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="{% url 'chat_history' %}" class="btn btn-secondary">Back to Chat Histories</a>
+    </div>
+  </div>
+</body>
+</html>

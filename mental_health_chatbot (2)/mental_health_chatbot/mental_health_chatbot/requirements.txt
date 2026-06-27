@@ -1,0 +1,8 @@
+Django
+google-generativeai
+python-decouple
+requests
+Pillow
+daphne
+channels
+apscheduler

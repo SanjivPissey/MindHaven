@@ -1,0 +1,94 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <!-- Bootstrap & Icons -->
+  <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/media/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/media/assets/css/main.css" rel="stylesheet">
+
+  
+
+<section id="contact" class="contact section">
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Contact</h2>
+    <p>Have questions or need support? Reach out to us—we're here to help you on your journey to better mental well-being.</p>
+  </div>
+  
+  <div class="mb-5" data-aos="fade-up" data-aos-delay="200">
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3885.458801933564!2d77.56478517410578!3d13.13343441131147!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae18a6776770dd%3A0x11724a163bbd0c85!2sBMSIT%20MANAGEMENT%2C%20BMS%20INSTITUTE%20OF%20TECHNOLOGY%2C%20Bengaluru%2C%20Karnataka%20560119!5e0!3m2!1sen!2sin!4v1765269628273!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+  
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row gy-4">
+      <div class="col-lg-4">
+        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+          <i class="bi bi-geo-alt flex-shrink-0"></i>
+          <div>
+            <h3>Location</h3>
+            <p>BMS Institute of Technology and Management, bangalore -560119</p>
+          </div>
+        </div>
+        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+          <i class="bi bi-telephone flex-shrink-0"></i>
+          <div>
+            <h3>Call Us</h3>
+            <p>+91 997158168</p>
+          </div>
+        </div>
+        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
+          <i class="bi bi-envelope flex-shrink-0"></i>
+          <div>
+            <h3>Email Us</h3>
+            <p>MindEase@example.com</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        {% if messages %}
+          <div class="messages">
+            {% for message in messages %}
+              <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+        <form method="post" action="{% url 'contact' %}" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+          {% csrf_token %}
+          <div class="row gy-4">
+            <div class="col-md-6">
+              <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+            </div>
+            <div class="col-md-6">
+              <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+            </div>
+            <div class="col-md-12">
+              <input type="text" class="form-control" name="subject" placeholder="Subject" required>
+            </div>
+            <div class="col-md-12">
+              <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
+            </div>
+            <div class="my-3">
+              <div class="loading" style="display: none;">Loading</div>
+              <div class="error-message" style="display: none;"></div>
+              <div class="sent-message" style="display: none;">Your message has been sent. Thank you!</div>
+          </div>
+          <div class="text-center">
+              <button type="submit" id="submit-button">
+                  <span id="button-text">Send Message</span>
+                  <span id="button-loading" style="display:none;">
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      Sending...
+                  </span>
+              </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

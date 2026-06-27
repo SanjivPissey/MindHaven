@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Coping Strategies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: white;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        select, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .tip-box {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-size: 18px;
+        }
+        .arrow-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #007bff; /* Blue color */
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            border-radius: 50%;
+        }
+        .arrow-btn:hover {
+            background: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💡 Personalized Coping Strategies 🎯</h1>
+        <p>Select your current emotion to receive personalized tips:</p>
+
+        <form action="" method="GET">
+            <select name="emotion" required>
+                <option value="">-- Choose an emotion --</option>
+                <option value="stressed">😩 Stressed</option>
+                <option value="anxious">😟 Anxious</option>
+                <option value="sad">😢 Sad</option>
+                <option value="happy">😊 Happy</option>
+                <option value="tired">😴 Tired</option>
+            </select>
+            <button type="submit">🔍 Get Tips</button>
+        </form>
+
+        {% if user_emotion %}
+            <h2>📝 Coping Tips for "{{ user_emotion|title }}"</h2>
+            {% for tip in tips %}
+                <div class="tip-box">{{ tip }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <a href="{% url 'userdashboard' %}" class="arrow-btn">🏠</a>
+    </div>
+</body>
+</html>

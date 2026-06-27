@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Home page</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="/media/assets/img/favicon.png" rel="icon">
+  <link href="/media/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/media/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/media/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/media/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="/media/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/media/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="/media/assets/css/main.css" rel="stylesheet">
+
+
+
+<body class="index-page">
+
+  <header id="header" class="header sticky-top">
+
+    <div class="topbar d-flex align-items-center">
+      <div class="container d-flex justify-content-center justify-content-md-between">
+        <div class="contact-info d-flex align-items-center">
+          <i class="bi bi-envelope d-flex align-items-center"><a
+              href="mailto:themindeaseteam@gmail.com">themindeaseteam@gmail.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+91 9972158168</span></i>
+        </div>
+        <div class="social-links d-none d-md-flex align-items-center">
+          <a href="https://www.instagram.com/themindeaseteam/" class="instagram"><i class="bi bi-instagram"></i></a>
+          <a href="https://twitter.com/themindeaseteam" class="twitter"><i class="bi bi-twitter-x"></i></a>
+          <a href="https://www.facebook.com/MindEase" class="facebook"><i class="bi bi-facebook"></i></a>
+
+        </div>
+      </div>
+
+    </div><!-- End Top Bar -->
+
+    <div class="branding d-flex align-items-center">
+
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="" class="logo d-flex align-items-center me-auto">
+          <!-- Uncomment the line below if you also wish to use an image logo -->
+          <!-- <img src="/media/assets/img/logo.png" alt=""> -->
+          <h1 class="sitename">MindEase</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="" class="active"><b>Home</b><br></a></li>
+            <li><a href="{% url 'user_login'%}"><b>About</b></a></li>
+            <li><a href="{% url 'user_login'%}"><b>Services</b></a></li>
+            <li><a href="{% url 'user_login'%}"><b>Psychologist</b></a></li>
+            <li><a href="{% url 'user_login'%}"><b>Contact</b></a></li>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+        <a class="cta-btn d-none d-sm-block" href="/user_login">Login</a>
+        <a class="cta-btn d-none d-sm-block" href="/register">Register</a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section light-background">
+
+      <img src="/media/assets/img/hero-bg.webp" alt="" data-aos="fade-in">
+
+      <div class="container position-relative">
+
+        <div class="welcome position-relative" data-aos="fade-down" data-aos-delay="100">
+          <h2><b>Welcome To MindEase</b></h2>
+          <p><b>Your AI-Powered Companion for Mental Well-being.</b></p>
+        </div><!-- End Welcome -->
+
+        <div class="content row gy-4">
+          <div class="col-lg-4 d-flex align-items-stretch">
+            <div class="why-box" data-aos="zoom-out" data-aos-delay="200">
+              <h3>Why Choose MindEase?</h3>
+              <p>
+                MindEase is an AI-powered mental health chatbot designed to provide confidential, personalized, and
+                accessible support. It combines AI-driven mood tracking, self-help tools, and stress management
+                techniques to enhance emotional well-being.
+
+              </p>
+              <div class="text-center">
+                <a href="#about" class="more-btn"><span>Learn More</span> <i class="bi bi-chevron-right"></i></a>
+              </div>
+            </div>
+          </div><!-- End Why Box -->
+
+          <div class="col-lg-8 d-flex align-items-stretch">
+            <div class="d-flex flex-column justify-content-center">
+              <div class="row gy-4">
+
+                <div class="col-xl-4 d-flex align-items-stretch">
+                  <div class="icon-box" data-aos="zoom-out" data-aos-delay="300">
+                    <i class="bi bi-clipboard-data"></i>
+                    <h4>Personalized Mental Health Support</h4>
+                    <p>
+                      <b>Our AI chatbot provides customized coping strategies based on real-time mood analysis.
+
+                        <p>Uses sentiment tracking to recommend self-help techniques for stress, anxiety, and emotional
+                          balance.
+
+                        </p>
+                      </b>
+                    </p>
+                  </div>
+                </div><!-- End Icon Box -->
+
+                <div class="col-xl-4 d-flex align-items-stretch">
+                  <div class="icon-box" data-aos="zoom-out" data-aos-delay="400">
+                    <i class="bi bi-gem"></i>
+                    <h4>24/7 Confidential Assistance</h4>
+                    <p><b>Get immediate, private, and judgment-free support anytime.
+
+                        <p>AI-powered responses ensure a safe space for expressing emotions.</p>
+                      </b>
+                    </p>
+                  </div>
+                </div><!-- End Icon Box -->
+
+                <div class="col-xl-4 d-flex align-items-stretch">
+                  <div class="icon-box" data-aos="zoom-out" data-aos-delay="500">
+                    <i class="bi bi-inboxes"></i>
+                    <h4>Guided Self-Help & Resources</h4>
+                    <p><b>Access guided meditation, breathing exercises, and scientifically-backed CBT techniques.
+
+                        <p>Mood tracking tools to monitor progress and identify patterns.</p>
+                      </b>
+                    </p>
+                  </div>
+                </div><!-- End Icon Box -->
+
+
+              </div>
+            </div>
+          </div>
+        </div><!-- End  Content-->
+
+      </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+      <div class="container">
+        <div class="row gy-4 gx-5">
+          <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="200">
+            <img src="/media/assets/img/about.webp" class="img-fluid" alt="Mental Health Chatbot">
+          </div>
+
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+            <h3>About MindEase – Your AI Powered Mental Health Companion</h3>
+            <p>
+              MindEase is an AI-driven mental health chatbot designed to provide compassionate, confidential, and
+              accessible support to individuals facing emotional and psychological challenges.
+              Our mission is to bridge the gap between mental well-being and technology, ensuring that users receive
+              personalized guidance, self-care techniques, and real-time assistance—anytime, anywhere.
+            </p>
+
+            <ul>
+              <li>
+                <i class="fa-solid fa-vial-circle-check"></i>
+                <div>
+                  <h5>AI-Driven Personalized Support</h5>
+                  <p>MindEase adapts to your emotions and needs, offering customized coping strategies, mental wellness
+                    tips, and stress management techniques tailored just for you.</p>
+                </div>
+              </li>
+              <li>
+                <i class="fa-solid fa-pump-medical"></i>
+                <div>
+                  <h5>24/7 Safe & Confidential Assistance</h5>
+                  <p>With round-the-clock availability, you can seek support in a private, judgment-free, and secure
+                    environment, ensuring complete confidentiality.</p>
+                </div>
+              </li>
+              <li>
+                <i class="fa-solid fa-hand-holding-heart"></i> <!-- Updated icon -->
+                <div>
+                  <h5>Take the First Step Toward Better Mental Health!</h5>
+                  <p>Get started with MindEase today and experience AI-powered emotional well-being at your fingertips.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- /About Section -->
+
+
+    <section id="vision" class="vision section">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row text-center d-flex align-items-stretch">
+          <div class="col-lg-3 col-md-6 d-flex">
+            <div class="vision-item border rounded p-4 shadow-sm w-100 d-flex flex-column">
+              <div class="icon-box mb-3">
+                <i class="fas fa-heart fa-2x text-primary"></i>
+              </div>
+              <h4 class="fw-bold">Our Vision</h4>
+              <p class="flex-grow-1">"Creating a safe space for mental well-being."</p>
+            </div>
+          </div><!-- End Vision Item -->
+
+          <div class="col-lg-3 col-md-6 d-flex">
+            <div class="vision-item border rounded p-4 shadow-sm w-100 d-flex flex-column">
+              <div class="icon-box mb-3">
+                <i class="fas fa-rocket fa-2x text-primary"></i>
+              </div>
+              <h4 class="fw-bold">Beta Launch</h4>
+              <p class="flex-grow-1">"Join us on our journey to revolutionize mental health support."</p>
+            </div>
+          </div><!-- End Vision Item -->
+
+          <div class="col-lg-3 col-md-6 d-flex">
+            <div class="vision-item border rounded p-4 shadow-sm w-100 d-flex flex-column">
+              <div class="icon-box mb-3">
+                <i class="fas fa-user-md fa-2x text-primary"></i>
+              </div>
+              <h4 class="fw-bold">Expert Guidance</h4>
+              <p class="flex-grow-1">"Bringing professionals and AI together for better support."</p>
+            </div>
+          </div><!-- End Vision Item -->
+
+          <div class="col-lg-3 col-md-6 d-flex">
+            <div class="vision-item border rounded p-4 shadow-sm w-100 d-flex flex-column">
+              <div class="icon-box mb-3">
+                <i class="fas fa-hands-helping fa-2x text-primary"></i>
+              </div>
+              <h4 class="fw-bold">Your Support Matters</h4>
+              <p class="flex-grow-1">"Help shape the future of mental wellness with us!"</p>
+            </div>
+          </div><!-- End Vision Item -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Our Services</h2>
+        <p>Harnessing AI to provide personalized, confidential, and compassionate mental health support anytime,
+          anywhere.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+        <div class="row gy-4">
+
+          <!-- 24/7 pport - Clickable -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+
+            <a href="{% url 'user_login' %}" style="text-decoration: none; color: inherit;">
+              <div class="service-item position-relative">
+                <div class="icon">
+                  <i class="fas fa-headset"></i>
+                </div>
+                <h3>24/7 chat bot</h3>
+                <p>Instant, anonymous, and empathetic AI-powered conversations for emotional support and guidance.</p>
+              </div>
+            </a>
+          </div><!-- End Service Item -->
+
+          <!-- Expert-Backed Mental Health Insights - Clickable -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <a href="{% url 'user_login'%}" style="text-decoration: none; color: inherit;">
+              <div class="service-item position-relative">
+                <div class="icon">
+                  <i class="fas fa-user-md"></i>
+                </div>
+                <h3>Expert-Backed Mental Health Insights</h3>
+                <p>AI-generated mental health insights based on psychologist-approved methods.</p>
+              </div>
+            </a>
+          </div><!-- End Service Item -->
+
+          <!-- Personalized Coping Strategies - Clickable -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <a href="{% url 'user_login' %}" style="text-decoration: none; color: inherit;">
+              <div class="service-item position-relative">
+                <div class="icon">
+                  <i class="fas fa-brain"></i>
+                </div>
+                <h3>Personalized Coping Strategies</h3>
+                <p>Receive tailored mental wellness plans based on AI-driven emotional analysis.</p>
+              </div>
+            </a>
+          </div><!-- End Service Item -->
+
+          <!-- AI-Powered Therapy Suggestions - Clickable -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <a href="{% url 'user_login' %}" style="text-decoration: none; color: inherit;">
+
+              <div class="service-item position-relative">
+                <div class="icon">
+                  <i class="fas fa-meditation"></i>
+                </div>
+                <h3>AI-Powered Therapy Suggestions</h3>
+                <p>Access AI-recommended relaxation exercises to enhance emotional well-being.</p>
+              </div>
+            </a>
+          </div><!-- End Service Item -->
+
+
+          <!-- Mood & Stress Analysis - Clickable -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+            <div class="service-item position-relative">
+              <a href="{% url 'user_login' %}" style="text-decoration: none; color: inherit;">
+                <div class="icon">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Mood & Stress Analysis</h3>
+                <p>Track emotional trends and receive AI-driven insights for better mental health management.</p>
+              </a>
+            </div>
+          </div>
+          <!-- End Service Item -->
+
+          <!-- User Dashboard for Personalized Tracking - Clickable -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+            <div class="service-item position-relative">
+              <a href="{% url 'user_login' %}" style="text-decoration: none; color: inherit;">
+                <div class="icon">
+                  <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <h3>User Dashboard for Personalized Tracking</h3>
+                <p>Monitor your mental health progress with a personalized AI-powered dashboard.</p>
+              </a>
+            </div>
+          </div>
+
+        </div><!-- End Service Item -->
+
+      </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works section light-background">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>How It Works</h2>
+        <p>Follow these simple steps to get AI-powered mental health support.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="work-step">
+              <i class="fas fa-sign-in-alt fa-3x text-primary"></i>
+              <h4>Step 1: Sign Up</h4>
+              <p>Create an account to personalize your mental health journey.</p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="work-step">
+              <i class="fas fa-comments fa-3x text-primary"></i>
+              <h4>Step 2: Chat with AI</h4>
+              <p>Start a conversation with our AI chatbot for real-time support.</p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="work-step">
+              <i class="fas fa-chart-line fa-3x text-primary"></i>
+              <h4>Step 3: Track Your Mood</h4>
+              <p>Monitor your emotional trends with AI-powered insights.</p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="work-step">
+              <i class="fas fa-user-md fa-3x text-primary"></i>
+              <h4>Step 4: Get Professional Help</h4>
+              <p>Connect with psychologists for further guidance if needed.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /How It Works Section -->
+
+    <!-- Psychologist Section -->
+    <section id="psychologists" class="psychologists section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Meet Our Psychologists</h2>
+        <p>Connect with certified professionals for personalized mental health support.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+        <div class="row gy-4">
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="team-member d-flex align-items-start">
+              <div class="pic me-3">
+                <img src="/media/assets/img/doctors/doctors-1.jpg" class="img-fluid rounded-circle" alt="Psychologist 1"
+                  style="width: 120px; height: 120px; object-fit: cover;">
+              </div>
+              <div class="member-info">
+                <h4>Dr. Emily Carter</h4>
+                <span>Clinical Psychologist</span>
+                <p>Specialized in cognitive behavioral therapy (CBT) and anxiety management.</p>
+              </div>
+            </div>
+          </div><!-- End Team Member -->
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="team-member d-flex align-items-start">
+              <div class="pic me-3">
+                <img src="/media/assets/img/doctors/doctors-2.jpg" class="img-fluid rounded-circle" alt="Psychologist 2"
+                  style="width: 120px; height: 120px; object-fit: cover;">
+              </div>
+              <div class="member-info">
+                <h4>Dr. Sarah Mitchell</h4>
+                <span>Child Psychologist</span>
+                <p>Focuses on child mental health, emotional development, and ADHD support.</p>
+              </div>
+            </div>
+          </div><!-- End Team Member -->
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="team-member d-flex align-items-start">
+              <div class="pic me-3">
+                <img src="/media/assets/img/doctors/doctors-3.jpg" class="img-fluid rounded-circle" alt="Psychologist 3"
+                  style="width: 120px; height: 120px; object-fit: cover;">
+              </div>
+              <div class="member-info">
+                <h4>Dr. James Anderson</h4>
+                <span>Counseling Psychologist</span>
+                <p>Expert in stress management and relationship counseling.</p>
+              </div>
+            </div>
+          </div><!-- End Team Member -->
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="team-member d-flex align-items-start">
+              <div class="pic me-3">
+                <img src="/media/assets/img/doctors/doctors-4.jpg" class="img-fluid rounded-circle" alt="Psychologist 4"
+                  style="width: 120px; height: 120px; object-fit: cover;">
+              </div>
+              <div class="member-info">
+                <h4>Dr. Amanda Blake</h4>
+                <span>Trauma Specialist</span>
+                <p>Specializes in PTSD, trauma recovery, and emotional resilience building.</p>
+              </div>
+            </div>
+          </div><!-- End Team Member -->
+
+        </div>
+      </div>
+
+    </section><!-- /Psychologist Section -->
+
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq section light-background">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Frequently Asked Questions</h2>
+        <p>Find answers to common queries about our AI-powered mental health chatbot.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row justify-content-center">
+
+          <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="faq-container">
+
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <h3>How does the AI chatbot support mental health?</h3>
+                <div class="faq-content">
+                  <p>Our AI-powered chatbot provides real-time emotional support, mood tracking, and personalized coping
+                    strategies based on your interactions.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End FAQ item -->
+
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <h3>Is my conversation with the chatbot confidential?</h3>
+                <div class="faq-content">
+                  <p>Yes! We use end-to-end encryption and anonymization techniques to ensure complete privacy and
+                    confidentiality of your conversations.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End FAQ item -->
+
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <h3>Can the chatbot diagnose mental health conditions?</h3>
+                <div class="faq-content">
+                  <p>No, the chatbot is designed to provide support and self-care strategies, but it does not replace
+                    professional diagnosis or therapy.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End FAQ item -->
+
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <h3>How does the chatbot track my mood and emotions?</h3>
+                <div class="faq-content">
+                  <p>Using sentiment analysis, the chatbot detects emotional patterns over time and provides tailored
+                    wellness insights based on your conversations.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End FAQ item -->
+
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <h3>Is the chatbot suitable for teenagers and students?</h3>
+                <div class="faq-content">
+                  <p>Yes, the chatbot is designed to be youth-friendly, offering supportive and age-appropriate guidance
+                    for students and teenagers.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End FAQ item -->
+
+              <div class="faq-item" onclick="toggleFaq(this)">
+                <h3>What should I do if I need immediate help or feel unsafe?</h3>
+                <div class="faq-content">
+                  <p>If you're in crisis or need urgent support, we strongly encourage you to reach out to a mental
+                    health helpline or emergency services in your area. The chatbot also provides quick links to
+                    professional resources.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End FAQ item -->
+
+            </div>
+
+          </div><!-- End FAQ Column -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /FAQ Section -->
+
+
+    <!-- Frequently Used Resources Section -->
+    <section id="resources" class="resources section" style="background-color: #f8f9fa; padding: 60px 0;">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Frequently Used Resources</h2>
+        <p>Explore self-help guides and relaxation techniques recommended by AI.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="resource-item">
+              <i class="fas fa-spa fa-3x text-primary"></i>
+              <h4>Mindfulness Exercises</h4>
+              <p>Practice AI-guided breathing and meditation techniques.</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="resource-item">
+              <i class="fas fa-book fa-3x text-primary"></i>
+              <h4>Self-Help Articles</h4>
+              <p>Read AI-recommended guides on mental well-being.</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="resource-item">
+              <i class="fas fa-music fa-3x text-primary"></i>
+              <h4>Relaxation Music</h4>
+              <p>Listen to calming soundscapes and music for stress relief.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Frequently Used Resources Section -->
+
+
+    <section id="contact" class="contact section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Contact</h2>
+        <p>Have questions or need support? Reach out to us—we're here to help you on your journey to better mental
+          well-being.</p>
+      </div>
+
+      <div class="mb-5" data-aos="fade-up" data-aos-delay="200">
+        <iframe style="border:0; width: 100%; height: 270px;"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.6877967272846!2d77.5638203148232!3d13.12301039075704!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae18a417672223%3A0xa54924db52a84a60!2sBMS%20Institute%20of%20Technology%20and%20Management!5e0!3m2!1sen!2sin!4v1647849642345!5m2!1sen!2sin"
+          frameborder="0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row gy-4">
+          <div class="col-lg-4">
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+              <i class="bi bi-geo-alt flex-shrink-0"></i>
+              <div>
+                <h3>Location</h3>
+                <p>BMS Institute of Technology and Management, Yelahanka, Bengaluru - 560064</p>
+              </div>
+            </div>
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+              <i class="bi bi-telephone flex-shrink-0"></i>
+              <div>
+                <h3>Call Us</h3>
+                <p>+91 997158168</p>
+              </div>
+            </div>
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
+              <i class="bi bi-envelope flex-shrink-0"></i>
+              <div>
+                <h3>Email Us</h3>
+                <p>MindEase@example.com</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <form method="post" action="{% url 'contact_view' %}" class="php-email-form" data-aos="fade-up"
+              data-aos-delay="200">
+              {% csrf_token %}
+              <div class="row gy-4">
+                <div class="col-md-6">
+                  <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                </div>
+                <div class="col-md-6">
+                  <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                </div>
+                <div class="col-md-12">
+                  <input type="text" class="form-control" name="subject" placeholder="Subject" required>
+                </div>
+                <div class="col-md-12">
+                  <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
+                </div>
+                <div class="col-md-12 text-center">
+                  {% if messages %}
+                  {% for message in messages %}
+                  <div class="alert {{ message.tags }}">{{ message }}</div>
+                  {% endfor %}
+                  {% endif %}
+                  <button type="submit">Send Message</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="footer" class="footer light-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">MindEase</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>BMS Institute of Technology and Management</p>
+            <p>Yelahanka, Bengaluru, 560064</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+91 9972158168</span></p>
+            <p><strong>Email:</strong> <span>themindeaseteam.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href="https://twitter.com/themindeaseteam"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.facebook.com/MindEase"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/themindeaseteam/"><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#psychologists">Psychologist</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-5 col-md-5 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="#services">24/7 chat bot</a></li>
+            <li><a href="#services">Expert-Backed Mental Health Insights</a></li>
+            <li><a href="#services">Personalized Coping Strategies</a></li>
+            <li><a href="#services">AI-Powered Therapy Suggestions</a></li>
+            <li><a href="#services">Mood & Stress Analysis</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="/media/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/media/assets/vendor/php-email-form/validate.js"></script>
+  <script src="/media/assets/vendor/aos/aos.js"></script>
+  <script src="/media/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/media/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="/media/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="/media/assets/js/main.js"></script>
+
+</body>
+
+</html>

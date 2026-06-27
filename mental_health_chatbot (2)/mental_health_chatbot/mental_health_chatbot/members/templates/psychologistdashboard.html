@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Psychologist Dashboard | MindEase</title>
+
+  <link href="/media/assets/img/favicon.png" rel="icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Raleway&display=swap"
+    rel="stylesheet">
+  <link href="/media/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/media/assets/css/main.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      --heading-font: "Poppins", sans-serif;
+      --nav-font: "Raleway", sans-serif;
+      --background-color: #ffffff;
+      --default-color: #444444;
+      --heading-color: #2c4964;
+      --accent-color: #1977cc;
+      --surface-color: #ffffff;
+      --contrast-color: #ffffff;
+    }
+
+    body {
+      font-family: var(--default-font);
+      background-color: var(--background-color);
+      color: var(--default-color);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: var(--heading-font);
+      color: var(--heading-color);
+    }
+
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: var(--accent-color);
+      color: var(--contrast-color);
+      padding-top: 20px;
+      z-index: 999;
+    }
+
+    .sidebar .logo h1 {
+      text-align: center;
+      color: var(--contrast-color);
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar ul li a {
+      color: var(--contrast-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .sidebar ul li a i {
+      margin-right: 10px;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 40px 20px;
+    }
+
+    .dashboard-box {
+      background: var(--surface-color);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .box-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+      color: var(--accent-color);
+    }
+
+    .box-value {
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--heading-color);
+    }
+
+    @media screen and (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sidebar">
+    <div class="logo">
+      <h1>MindEase</h1>
+    </div>
+    <ul>
+      <li><a href="/psychologist_dashboard"><i class="fas fa-home"></i>Dashboard</a></li>
+      <li><a href="/psychologist_profile"><i class="fas fa-user"></i>My Profile</a></li>
+      <li><a href="/assigned_users"><i class="fas fa-users"></i>Assigned Users</a></li>
+      <li><a href="/psychologist_appointments/"><i class="fas fa-calendar-alt"></i>Appointments</a></li>
+      <li><a href="/view_survey_list"><i class="fas fa-clipboard-list"></i>Survey Forms</a></li>
+      <li><a href="/chat_history"><i class="fas fa-comments"></i>Chat Histories</a></li>
+      <li><a href="/mood_insights"><i class="fas fa-chart-line"></i>Mood Insights</a></li>
+      <li><a href="/reports"><i class="fas fa-file-medical"></i>Reports</a></li>
+      <li><a href="/user_logout"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <h2 class="dashboard-title">Welcome Psychologist! 🧠</h2>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="dashboard-box">
+          <i class="fas fa-users box-icon"></i>
+          <div class="box-value">{{ assigned_user_count }}</div>
+          <p>Users Assigned To You</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="dashboard-box">
+          <i class="fas fa-clipboard-list box-icon"></i>
+          <div class="box-value">{{ survey_count }}</div>
+          <p>Survey Forms Submitted</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="dashboard-box">
+          <i class="fas fa-comments box-icon"></i>
+          <div class="box-value">{{ chat_count }}</div>
+          <p>Chat Histories Available</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="dashboard-box">
+          <i class="fas fa-file-medical box-icon"></i>
+          <div class="box-value">{{ report_count }}</div>
+          <p>Reports Created</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-box">
+      <h4 class="text-center mb-4"><i class="fas fa-chart-line box-icon"></i> Mood Insights</h4>
+      <div style="max-height: 300px; overflow-y: auto;">
+        {% for user in assigned_users %}
+        <div
+          style="display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 15px;">
+          <div>
+            <strong>{{ user.fullname }}</strong>
+            <div>
+              <span
+                class="{% if user.latest_mood == 'Happy' %}text-success{% elif user.latest_mood == 'Calm' %}text-primary{% elif user.latest_mood == 'Neutral' %}text-secondary{% elif user.latest_mood == 'Sad' %}text-warning{% elif user.latest_mood == 'Anxious' %}text-danger{% endif %}">
+                <strong>Mode: {{ user.latest_mood }}</strong>
+              </span>
+
+              <span
+                class="ms-2 {% if user.latest_stress_level > 3 %}text-danger{% elif user.latest_stress_level == 3 %}text-warning{% else %}text-success{% endif %}">
+                <strong>Stress: {{ user.latest_stress_level }}</strong>
+              </span>
+
+              {% if user.latest_mood_confidence %}
+              <small class="text-muted">({{ user.latest_mood_confidence|floatformat:2 }})</small>
+              {% endif %}
+            </div>
+            <div class="mt-2">
+              <a href="/view_survey/{{ user.id }}/" class="btn btn-sm btn-outline-info me-1"><i
+                  class="fas fa-clipboard-list"></i> Survey</a>
+              <a href="/chat_history/{{ user.id }}/" class="btn btn-sm btn-outline-secondary"><i
+                  class="fas fa-comments"></i> Chat</a>
+            </div>
+          </div>
+          <div>
+            <a href="/mood_insights/{{ user.id }}" class="btn btn-sm btn-outline-primary">View Details</a>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">No mood data available.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+
+
+
+
+    <script>
+      function searchReports() {
+        const searchTerm = document.getElementById('report-search').value.toLowerCase();
+        const reportCards = document.querySelectorAll('.card');
+
+        reportCards.forEach(card => {
+          const patientName = card.querySelector('.text-muted span').textContent.toLowerCase();
+          if (patientName.includes(searchTerm)) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      // WebSocket connection for real-time notifications
+      const wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
+      const wsUrl = wsProtocol + window.location.host + '/ws/notifications/';
+      const notificationSocket = new WebSocket(wsUrl);
+
+      notificationSocket.onmessage = function(e) {
+          const data = JSON.parse(e.data);
+          // Create and show a toast notification dynamically
+          const toastContainer = document.getElementById('toast-container');
+          if (!toastContainer) return;
+          
+          const toastId = 'toast' + Date.now();
+          const toastHTML = `
+            <div id="${toastId}" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="10000">
+              <div class="toast-header bg-primary text-white">
+                <i class="fas fa-bell me-2"></i>
+                <strong class="me-auto">MindEase Alert</strong>
+                <small>Just now</small>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+              <div class="toast-body bg-white text-dark">
+                ${data.message}
+              </div>
+            </div>
+          `;
+          toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+          const toastElement = document.getElementById(toastId);
+          const toast = new bootstrap.Toast(toastElement);
+          toast.show();
+      };
+
+      notificationSocket.onclose = function(e) {
+          console.error('Notification socket closed unexpectedly');
+      };
+    </script>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+  </div>
+
+  <script src="/media/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
